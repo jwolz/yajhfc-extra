@@ -5,7 +5,7 @@ Release:      1
 License:      GNU General Public License (GPL)
 Group:        Hardware/Fax
 Source:       yajhfc-%{version}-rpmsrc.tgz
-URL:          http://yajhfc.berlios.de/
+URL:          http://www.yajhfc.de/
 Vendor:       Jonas Wolz
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 Requires:     yajhfc, cups, cups-client
@@ -50,5 +50,7 @@ sh install-faxprinter.sh "%{buildroot}"
 /usr/lib/cups/backend/yajhfc
 
 %changelog
+* Sun Oct 16 2011 - jonas@yajhfc.de
+- Changed homepage link 
 * Tue Jan 05 2010 - jonas.wolz@freenet.de
 - initial RPM for YajHFC on openSUSE 

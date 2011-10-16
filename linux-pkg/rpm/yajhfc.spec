@@ -5,7 +5,7 @@ Release:      1
 License:      GNU General Public License (GPL)
 Group:        Hardware/Fax
 Source:       yajhfc-%{version}-rpmsrc.tgz
-URL:          http://yajhfc.berlios.de/
+URL:          http://www.yajhfc.de/
 Vendor:       Jonas Wolz
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 Requires:     java >= 1.5.0
@@ -44,5 +44,7 @@ sh install.sh "%{buildroot}"
 /usr/share/man/man1/yajhfc.1.gz
 
 %changelog
+* Sun Oct 16 2011 - jonas@yajhfc.de
+- Changed homepage link 
 * Tue Jan 05 2010 - jonas.wolz@freenet.de
 - initial RPM for YajHFC on openSUSE 

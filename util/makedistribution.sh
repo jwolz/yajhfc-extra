@@ -74,7 +74,7 @@ cat <<EOF > $OUTPUT/versioninfo.xml
 <yajhfcupdatefile>
 	<currentVersion>$YAJVERDOT</currentVersion>
 	<releaseDate>`date +%Y-%m-%d`</releaseDate>
-	<infoURL>http://yajhfc.berlios.de/</infoURL>
+	<infoURL>http://www.yajhfc.de/</infoURL>
 </yajhfcupdatefile>
 EOF
 

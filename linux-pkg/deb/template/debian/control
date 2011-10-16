@@ -1,10 +1,10 @@
 Source: yajhfc
 Section: comm
 Priority: extra
-Maintainer: Jonas Wolz <jonas.wolz@freenet.de>
+Maintainer: Jonas Wolz <jonas@yajhfc.de>
 Build-Depends: debhelper (>= 7)
 Standards-Version: 3.7.3
-Homepage: http://yajhfc.berlios.de/
+Homepage: http://www.yajhfc.de/
 
 Package: yajhfc
 Architecture: all

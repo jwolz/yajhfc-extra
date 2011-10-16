@@ -2,7 +2,7 @@ If you are running Windows 95/98/Me or Windows NT 4 a fax printer cannot be auto
 installed by the YajHFC setup program.
 
 
-Please follow the instructions given at http://yajhfc.berlios.de/doc/winfaxprinter.html
+Please follow the instructions given at http://files.yajhfc.de/doc/winfaxprinter.html
 to install a fax printer.
 
 
