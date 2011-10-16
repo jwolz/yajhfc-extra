@@ -1,6 +1,20 @@
+OLD:
+
 APT-Zeile:
 deb ftp://ftp.berlios.de/pub/yajhfc/repository/apt stable/
 deb-src ftp://ftp.berlios.de/pub/yajhfc/repository/apt stable/
 
 Public Key:
 wget -q http://yajhfc.berlios.de/JonasWolz.pub -O - | sudo apt-key add -
+
+======
+NEW:
+
+APT-Zeile:
+deb http://download.yajhfc.de/repository/apt/ stable/
+deb-src http://download.yajhfc.de/repository/apt/ stable/
+
+Public Key:
+wget -q http://download.yajhfc.de/JonasWolz.pub -O - | sudo apt-key add -
+
+

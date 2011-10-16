@@ -123,7 +123,7 @@ Source: {#FOPDIR}\lib\{#FileName}; DestDir: {app}\lib; Components: base
 Source: c:\programme\istool\isxdl.dll; DestDir: {tmp}; Flags: dontcopy
 
 [Setup]
-AppCopyright=© 2005-2009 by Jonas Wolz
+AppCopyright=© 2005-2011 by Jonas Wolz
 AppName={#APPNAME}
 AppVerName={#APPVERNAME}
 InfoBeforeFile=temp\README.txt
@@ -131,7 +131,7 @@ LicenseFile=..\..\..\workspace\yajhfc\COPYING
 DefaultDirName={pf}\YajHFC
 DefaultGroupName=YajHFC
 AppPublisher=Jonas Wolz
-AppPublisherURL=http://yajhfc.berlios.de/
+AppPublisherURL=http://www.yajhfc.de/
 AppVersion={#APPVERNAME}
 AppID={{2B5B4C28-0B7E-45C8-AF23-9A1816E70911}
 UninstallDisplayIcon={app}\yajhfc.ico
@@ -157,7 +157,7 @@ Name: {commondesktop}\{cm:YajHFCName}; Filename: {#LaunchEXE}; Parameters: "{#La
 #ifdef WITHFOP
 Name: {group}\FOPPlugin README; Filename: {app}\readme.pdf
 #endif
-Name: {group}\Homepage; Filename: http://yajhfc.berlios.de/; Components: base
+Name: {group}\Homepage; Filename: http://www.yajhfc.de/; Components: base
 Name: {group}\FAQ; Filename: {app}\faq.pdf; Components: docs
 Name: {group}\FAQ ({cm:French}); Filename: {app}\faq_fr.pdf; Components: docs
 Name: {group}\FAQ ({cm:German}); Filename: {app}\faq_de.pdf; Components: docs
@@ -198,7 +198,7 @@ Filename: rundll32; Components: faxprinter/redmon faxprinter/redmonee; Parameter
 Filename: reg; Components: faxprinter/redmon faxprinter/redmonee; Parameters: "delete ""HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\{cm:redmonname}\Ports\YAJHFC:"" /f"; RunOnceId: DeletePort; MinVersion: 0,5.0
 Filename: unredmon.exe; WorkingDir: {sys}; Components: FaxPrinter/Redmon FaxPrinter/RedmonEE; RunOnceId: RemoveRedmon
 [INI]
-Filename: {group}\Homepage.url; Section: InternetShortcut; Key: URL; String: http://yajhfc.berlios.de/
+Filename: {group}\Homepage.url; Section: InternetShortcut; Key: URL; String: http://www.yajhfc.de/
 [UninstallDelete]
 Type: files; Name: {group}\Homepage.url
 Type: files; Name: {app}\settings.default

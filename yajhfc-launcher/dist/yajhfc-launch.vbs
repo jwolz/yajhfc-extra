@@ -1,6 +1,6 @@
 ' This script is a wrapper to work around a bug that may show up
 '  when Java gets started by RedMon.
-'  See http://yajhfc.berlios.de/doc/yajhfc-launcher.html for details how to use it.
+'  See http://files.yajhfc.de/doc/yajhfc-launcher.html for details how to use it.
 
 'Configurable Parameters:
 
