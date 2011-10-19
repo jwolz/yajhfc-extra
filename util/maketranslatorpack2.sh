@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+set -e
 
 WORKSPACE=~/java/workspace
 
@@ -17,6 +19,9 @@ makepack() {
 
   FOPMSG=FOPPlugin/i18n/FOPMessages.po
   LOCFOPMSG=FOPPlugin/i18n/FOPMessages_$1.po
+
+  CONSMSG=yajhfc-console/i18n/Messages.po
+  LOCCONSMSG=yajhfc-console/i18n/Messages_$1.po
 
   CMDLINEOPTS=yajhfc/src/yajhfc/i18n/CommandLineOpts.po
   LOCCMDLINEOPTS=yajhfc/src/yajhfc/i18n/CommandLineOpts_$1.po
@@ -41,6 +46,17 @@ makepack() {
 
   zip -j $OUT $FILES
 
+  if [ "$INCLCONSMSG" = "y" -a -f $LOCCONSMSG ]; then
+     if [ ! -d $OUTDIR/console ]; then
+       mkdir $OUTDIR/console
+     fi
+     
+     cp $LOCCONSMSG $OUTDIR/console
+     pushd $OUTDIR > /dev/null
+     zip $OUT console/`basename $LOCCONSMSG` 
+     popd > /dev/null
+  fi
+
   echo "Output has been written to $OUT"
 }
 
@@ -48,6 +64,7 @@ read -p 'Include FAQ? [y/n]' INCLFAQ
 read -p 'Include CommandLineOpts? [y/n]' INCLCMDLINEOPTS
 read -p 'Include README? [y/n]' INCLREADME
 read -p 'Include FOP Msg? [y/n]' INCLFOPMSG
+read -p 'Include Console Msg? [y/n]' INCLCONSMSG
 read -p 'Upload stuff? [y/n]' UPLOADSTUFF
 
 OUTDIR=/tmp/yajhfc-trans
@@ -67,12 +84,15 @@ done
 if [ "$UPLOADSTUFF" = "y" ]; then
 	cd $OUTDIR
 
-	UPLOADPATH=/pub/yajhfc/i18n-temp
-	scp yajhfc_*.zip jwolz@shell.berlios.de:/home/groups/ftp$UPLOADPATH/
+	echo "Uploading..."
+	UPLOADPATH=/html/yajhfc/files/temp/translations
+	lftp -c "open ftp://web406@srv7.sysproserver.de/$UPLOADPATH ; mput yajhfc_*.zip"
+	#scp yajhfc_*.zip jwolz@shell.berlios.de:/home/groups/ftp$UPLOADPATH/
 	
 	echo "Uploaded the following files:"
 	for ZIP in yajhfc_*.zip ; do
-	   echo ftp://ftp.berlios.de$UPLOADPATH/$ZIP
+	   #echo ftp://ftp.berlios.de$UPLOADPATH/$ZIP
+	   echo http://files.yajhfc.de/temp/translations/$ZIP
 	done
 fi
 
