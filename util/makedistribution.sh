@@ -19,6 +19,7 @@ build() {
 ANT=ant
 ISCC="wine \"C:\Program Files\Inno Setup 5\ISCC\""
 ISSFILE=setup3.iss
+FOPISSFILE=setup-fop.iss
 
 read YAJVER YAJVERDOT FOPVER FOPVERDOT  <<EOF
 $(perl -lne 'if ($_ =~/public static final String AppVersion = "(.*?)";/) { $Ver=$1; $Ver=~tr/./_/; printf("%s %s ", $Ver, $1);}' $WORKSPACE/yajhfc/src/yajhfc/Utils.java $WORKSPACE/FOPPlugin/src/yajhfc/faxcover/fop/EntryPoint.java )
@@ -56,7 +57,8 @@ windowsify -i utf-8 -o utf-8 $READMES
 echo "Building YajHFC setup..."
 eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT $ISSFILE
 echo "Building YajHFC with FOPPlugin setup..."
-eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT /dWITHFOP $ISSFILE
+#eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT /dWITHFOP $ISSFILE
+eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT /dWITHFOP $FOPISSFILE
 
 echo "Copying files to output..."
 cp $WORKSPACE/yajhfc/build/yajhfc.jar $OUTPUT/yajhfc-$YAJVER.jar

@@ -26,7 +26,14 @@ dim printlaunchmode, dowait, dosaveenv, copystdin
 
 const jarname              = "yajhfc.jar"
 const launchclass          = "yajhfc.Launcher"
+const splashimg            = "logo-large.png"
 const regkey               = "HKCU\Software\YajHFC\"
+
+Const HKEY_CLASSES_ROOT  = &H80000000
+Const HKEY_CURRENT_USER  = &H80000001
+Const HKEY_LOCAL_MACHINE  = &H80000002
+Const HKEY_USERS   = &H80000003
+Const HKEY_CURRENT_CONFIG  = &H80000005
 
 Set wshshell = WScript.CreateObject("WScript.Shell")
 Set fso = WScript.CreateObject("Scripting.FileSystemObject")
@@ -60,15 +67,52 @@ function getJavaHome
 	end if
 end function
 
+function enumRegKey(rootkey, path)
+	dim objReg, arrValueNames, arrValueTypes
+	
+	on error resume next
+	err.clear
+
+	Set objReg=GetObject("winmgmts:{impersonationLevel=impersonate}!\\.\root\default:StdRegProv")
+	if (Err <> 0) then
+		enumRegKey = Array()
+		exit function
+	end if
+	objReg.EnumValues rootkey, path, arrValueNames, arrValueTypes
+
+	if (Err <> 0) or not IsArray(arrValueNames) then
+		enumRegKey = Array()
+	else
+		enumRegKey = arrValueNames
+	end if	
+end function
+
+function startsWith(s, prefix)
+	startsWith = (Left(s, len(prefix)) = prefix)
+end function
+
 ' Return java arguments
 function getJavaArgs
 	' Set current directory to app directory:
 	wshshell.CurrentDirectory = fso.getParentFolderName(WScript.ScriptFullName)
 
 	getJavaArgs = "-Duser.home=""" + env("USERPROFILE") + """ "
+
+	dim i
+	for i=lbound(registryvalues) to ubound(registryvalues) 
+		dim jarg
+		jarg = registryvalues(i)
+		if startsWith(jarg, "addJavaArg") then
+			getJavaArgs = getJavaArgs & wshshell.regread("HKLM\Software\YajHFC\" & jarg) & " "	
+		end if
+	next
+
 	' Add all files in the "lib" sub-directory to the class path
 	if (fso.FolderExists("lib")) then
 	  dim libs, classpath, file
+	  ' Add lib directory to PATH
+	  env("PATH") = env("PATH") & ";" & wshshell.CurrentDirectory & "\lib"
+
 	  classpath = env("CLASSPATH")
 	
 	  set libs = fso.getFolder("lib")
@@ -82,7 +126,7 @@ function getJavaArgs
 	  classpath = classpath & ";" & jarname
 	  env("CLASSPATH") = classpath
 	
-	  getJavaArgs = getJavaArgs & launchclass
+	  getJavaArgs = getJavaArgs & "-splash:" & splashimg & " " & launchclass
 	else
 	  getJavaArgs = getJavaArgs & "-jar " & jarname
 	end if
@@ -90,7 +134,7 @@ end function
 
 ' Return java arguments as saved in the registry for printlaunch mode
 function getJavaArgsFromRegistry(userprofile)
-	getJavaArgsFromRegistry = "-Duser.home=""" & userprofile & """ " & getJavaArgs()
+	getJavaArgsFromRegistry = getJavaArgs()
 	on error resume next
 	getJavaArgsFromRegistry = getJavaArgsFromRegistry & " " & wshshell.regread("HKLM\Software\YajHFC\printlaunchyajhfcparams")
 	on error goto 0
@@ -214,7 +258,7 @@ function parseCommandLine
 	parseCommandLine = cmdline
 end function
 
-dim javahome, launchargs, javaexe, commandline
+dim javahome, launchargs, javaexe, commandline, registryvalues
 
 javahome = getJavaHome()
 if javahome = "" then
@@ -222,7 +266,21 @@ if javahome = "" then
 	WScript.Quit(1)
 end if
 
-launchargs = parseCommandLine
+' Global variable with values in the YajHFC reg key
+registryvalues = enumRegKey(HKEY_LOCAL_MACHINE, "Software\YajHFC")
+
+dim i
+for i=lbound(registryvalues) to ubound(registryvalues) 
+	dim larg
+	'wscript.echo larg
+	larg = registryvalues(i)
+	if startsWith(larg, "addLaunchArg") then
+		launchargs = launchargs & wshshell.regread("HKLM\Software\YajHFC\" & larg) & " "
+	end if
+next
+
+launchargs = launchargs & parseCommandLine
+
 
 if printlaunchmode then
 	dim userprofile
