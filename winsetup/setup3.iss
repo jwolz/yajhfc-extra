@@ -15,6 +15,7 @@
 
 [Files]
 Source: ..\..\..\workspace\yajhfc\build\yajhfc.jar; DestDir: {app}; Components: base
+Source: ..\..\..\workspace\yajhfc\src\yajhfc\logo-large.png; DestDir: {app}; Components: base
 Source: ..\..\..\workspace\yajhfc\doc\faq_es.pdf; DestDir: {app}; Components: docs
 Source: ..\..\..\workspace\yajhfc\doc\faq_de.pdf; DestDir: {app}; Components: docs
 Source: ..\..\..\workspace\yajhfc\doc\faq_fr.pdf; DestDir: {app}; Components: docs
@@ -132,7 +133,7 @@ DefaultDirName={pf}\YajHFC
 DefaultGroupName=YajHFC
 AppPublisher=Jonas Wolz
 AppPublisherURL=http://www.yajhfc.de/
-AppVersion={#APPVERNAME}
+AppVersion={#VERSION}
 AppID={{2B5B4C28-0B7E-45C8-AF23-9A1816E70911}
 UninstallDisplayIcon={app}\yajhfc.ico
 UninstallDisplayName={#APPVERNAME}
@@ -168,7 +169,8 @@ Name: {group}\FAQ ({cm:Turkish}); Filename: {app}\faq_tr.pdf; Components: docs
 [Registry]
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: instpath; ValueData: {app}; Flags: uninsdeletekey
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: jarfile; ValueData: yajhfc.jar; Flags: uninsdeletekey
-Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: printlaunchyajhfcparams; ValueData: "{#AdditionalLaunchArgs} --stdin"; Flags: createvalueifdoesntexist uninsdeletekey; Components: faxprinter/redmon
+Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: version; ValueData: {#VERSION}; Flags: uninsdeletekey
+Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: printlaunchyajhfcparams; ValueData: "{#AdditionalLaunchArgs} --stdin"; Flags: uninsdeletekey; Components: faxprinter/redmon
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Print\Monitors\{cm:redmonname}\Ports\YAJHFC:; Flags: uninsdeletekey dontcreatekey; Components: faxprinter/redmon faxprinter/redmonee
 
 [Components]
@@ -325,8 +327,8 @@ var bInstallGS: boolean;
     preserveDownload: integer;
     bRemoveOldPrinter: boolean;
 const
-    ghostscript32path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs902w32.exe';
-    ghostscript64path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs902w64.exe';
+    ghostscript32path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs904w32.exe';
+    ghostscript64path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs904w64.exe';
     ghostscriptdllkey = 'SOFTWARE\GPL Ghostscript';
     tiffkey = 'SOFTWARE\GnuWin32\Tiff';
     tiffpath = 'http://downloads.sourceforge.net/sourceforge/gnuwin32/tiff-3.8.2-1.exe';
