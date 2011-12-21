@@ -1,17 +1,12 @@
 ﻿#ifndef VERSION
  #define public VERSION "0.4.2a"
 #endif
-#ifndef FOPVersion
-  #define public FOPVersion "0.1"
-#endif
-#ifndef WITHFOP
-  #define APPNAME "YajHFC"
-  #define APPVERNAME APPNAME + " " + VERSION
-#else
-  #define APPNAME "YajHFC and FOPPlugin"
-  #define APPVERNAME "YajHFC " + VERSION + " and FOPPlugin " + FOPVersion
-  #define FOPDIR "..\..\..\..\build\fop-1.0"
-#endif
+
+#define APPNAME "YajHFC"
+#define APPVERNAME APPNAME + " " + VERSION
+
+#define ITEXT_DIR "..\..\..\..\build\itext"
+#define ITEXT_JAR "itextpdf-5.1.3.jar"
 
 [Files]
 Source: ..\..\..\workspace\yajhfc\build\yajhfc.jar; DestDir: {app}; Components: base
@@ -30,6 +25,12 @@ Source: execyajhfc2.vbs; DestDir: {app}; Components: base
 Source: ..\..\..\workspace\yajhfc-console\build\yajhfc-console.jar; DestDir: {app}; Components: console
 Source: ..\..\..\workspace\yajhfc-console\build\cyajhfc.exe; DestDir: {app}; Components: console
 Source: ..\..\..\workspace\yajhfc-console\dist\README.txt; DestName: README-cyajhfc.txt; DestDir: {app}; Components: console
+
+; YajHFC PDF support
+Source: ..\..\..\workspace\yajhfc-pdf-plugin\build\yajhfc-pdf-plugin.jar; DestDir: {app}; Components: pdf
+Source: {#ITEXT_DIR}\{#ITEXT_JAR}; DestDir: {app}\lib; Components: pdf
+Source: pdf-plugin.default; DestDir: {app}\settings.d; Components: pdf
+; TODO: examples...
 
 ; Redmon: Common files (docs):
 Source: redmon\LICENCE; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
@@ -82,6 +83,7 @@ Source: RedMonEE\UnRedmon.exe; DestDir: {app}\redmonee; Components: FaxPrinter/R
 Source: submitanddelete.cmd; DestDir: {app}; Components: FaxPrinter/Redmonee
 
 Source: ..\..\..\workspace\yajhfc\COPYING; DestDir: {app}; Components: base
+Source: ..\..\..\workspace\yajhfc\LICENSE; DestDir: {app}; Components: base
 Source: temp\README.txt; DestDir: {app}; Components: base
 Source: temp\README_de.txt; DestDir: {app}; Components: docs
 Source: temp\README_es.txt; DestDir: {app}; Components: docs
@@ -90,38 +92,12 @@ Source: temp\README_ru.txt; DestDir: {app}; Components: docs
 Source: temp\README_tr.txt; DestDir: {app}; Components: docs
 Source: w98info.txt; DestDir: {app}; OnlyBelowVersion: 0,5.0; Components: faxprinter/redmon faxprinter/redmonee; Tasks:
 Source: ..\cover\Coverpage example.html; DestDir: {app}\examples; Components: docs
-#ifndef WITHFOP
 Source: ..\cover\SomeLogo.png; DestDir: {app}\examples; Components: docs
-#else
-Source: ..\..\..\workspace\FOPPlugin\build\FOPPlugin.jar; DestDir: {app}; Components: base
-Source: ..\..\..\workspace\FOPPlugin\dist\readme.odt; DestDir: {app}; Components: docs
-Source: ..\..\..\workspace\FOPPlugin\dist\readme.pdf; DestDir: {app}; Components: base
-Source: ..\..\..\workspace\FOPPlugin\dist\yajhfc-fo.cmd; DestDir: {app}; Components: base
-Source: ..\..\..\workspace\FOPPlugin\dist\examples\cover.odt; DestDir: {app}\examples; Components: docs
-Source: ..\..\..\workspace\FOPPlugin\dist\examples\SomeLogo.png; DestDir: {app}\examples; Components: docs
-Source: ..\..\..\workspace\FOPPlugin\dist\examples\SomeLogoScaled.png; DestDir: {app}\examples; Components: docs
-Source: {#FOPDIR}\build\fop.jar; DestDir: {app}\lib; Components: base
-
-  #define FindHandle
-  #define FindResult
-;  #define ClassPath ""
-
-  #sub ProcessFoundFile
-    #define FileName FindGetFileName(FindHandle)
-Source: {#FOPDIR}\lib\{#FileName}; DestDir: {app}\lib; Components: base
-;	#define public ClassPath = ClassPath + "{app}\lib\" + FileName + ";"
-  #endsub
-
-  #for {FindHandle = FindResult = FindFirst(FOPDIR + "\lib\*.jar", 0); FindResult; FindResult = FindNext(FindHandle)} ProcessFoundFile
-  #if FindHandle
-    #expr FindClose(FindHandle)
-  #endif
-
-;  #define ClassPath = ClassPath + "{app}\lib\fop.jar"
-#endif
-
 
 Source: c:\programme\istool\isxdl.dll; DestDir: {tmp}; Flags: dontcopy
+
+[Dirs]
+Name: "{app}\settings.d"
 
 [Setup]
 AppCopyright=© 2005-2011 by Jonas Wolz
@@ -137,16 +113,9 @@ AppVersion={#VERSION}
 AppID={{2B5B4C28-0B7E-45C8-AF23-9A1816E70911}
 UninstallDisplayIcon={app}\yajhfc.ico
 UninstallDisplayName={#APPVERNAME}
-#ifdef WITHFOP
-OutputBaseFilename=Setup-FOPPlugin
-#endif
 ArchitecturesInstallIn64BitMode=x64
 
-#ifndef WITHFOP
- #define public AdditionalLaunchArgs=""
-#else
- #define public AdditionalLaunchArgs="--loadplugin """"{app}\FOPPlugin.jar"""""
-#endif
+#define public AdditionalLaunchArgs=""
 
 #define public LaunchEXEArgs="""""{app}\execyajhfc2.vbs"""" " + AdditionalLaunchArgs
 #define public LaunchEXE="wscript.exe"
@@ -155,9 +124,6 @@ ArchitecturesInstallIn64BitMode=x64
 Name: {group}\{cm:YajHFCName}; Filename: {#LaunchEXE}; Parameters: "{#LaunchEXEArgs}"; WorkingDir: {app}; IconFilename: {app}\yajhfc.ico; IconIndex: 0; Components: base
 Name: {group}\{cm:YajHFCName} ({cm:debugmode}); Filename: {#LaunchEXE}; Parameters: "{#LaunchEXEArgs} --debug --logfile=:prompt:"; WorkingDir: {app}; IconFilename: {app}\yajhfc.ico; IconIndex: 0; Components: base
 Name: {commondesktop}\{cm:YajHFCName}; Filename: {#LaunchEXE}; Parameters: "{#LaunchEXEArgs}"; IconFilename: {app}\yajhfc.ico; IconIndex: 0; WorkingDir: {app}; Tasks: DesktopIcon
-#ifdef WITHFOP
-Name: {group}\FOPPlugin README; Filename: {app}\readme.pdf
-#endif
 Name: {group}\Homepage; Filename: http://www.yajhfc.de/; Components: base
 Name: {group}\FAQ; Filename: {app}\faq.pdf; Components: docs
 Name: {group}\FAQ ({cm:French}); Filename: {app}\faq_fr.pdf; Components: docs
@@ -173,6 +139,8 @@ Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: version; Valu
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: printlaunchyajhfcparams; ValueData: "{#AdditionalLaunchArgs} --stdin"; Flags: uninsdeletekey; Components: faxprinter/redmon
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Print\Monitors\{cm:redmonname}\Ports\YAJHFC:; Flags: uninsdeletekey dontcreatekey; Components: faxprinter/redmon faxprinter/redmonee
 
+Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: addLaunchArg.PDFplugin; ValueData: "--loadplugin=""{app}\yajhfc-pdf-plugin.jar"""; Flags: uninsdeletekeyifempty uninsdeletevalue; Components: pdf
+
 [Components]
 Name: Base; Description: {cm:CoreApplicationFiles}; Flags: fixed; Types: custom compact full
 Name: Docs; Description: {cm:Documentation}; Types: full
@@ -180,6 +148,7 @@ Name: FaxPrinter; Description: {cm:InstallFaxPrinter}; Types: full
 Name: FaxPrinter/Redmon; Description: {cm:RedmonComponentDesc}; Types: full; Flags: exclusive
 Name: FaxPrinter/RedmonEE; Description: {cm:RedmonEEComponentDesc}; Flags: exclusive
 Name: Console; Description: {cm:ConsoleSupport}; Types: full
+Name: PDF; Description: {cm:PDFSupport}; Types: full
 
 [Run]
 Filename: rundll32; StatusMsg: {cm:RemovingX,{cm:faxprinter}}; Components: faxprinter/redmon faxprinter/redmonee; Parameters: "printui.dll,PrintUIEntry /dl /n ""{cm:printername}"""; Check: RemoveOldPrinter; MinVersion: 0,5.0
@@ -203,7 +172,7 @@ Filename: unredmon.exe; WorkingDir: {sys}; Components: FaxPrinter/Redmon FaxPrin
 Filename: {group}\Homepage.url; Section: InternetShortcut; Key: URL; String: http://www.yajhfc.de/
 [UninstallDelete]
 Type: files; Name: {group}\Homepage.url
-Type: files; Name: {app}\settings.default
+Type: files; Name: {app}\settings.d\path-settings.default
 Type: files; Name: {app}\tiff2pdf.cmd
 
 [CustomMessages]
@@ -231,6 +200,7 @@ RedmonEE32bitOnly=RedmonEE is only supported on 32bit versions of Windows.
 RedmonEERecommended=On this version of Windows, using RedmonEE instead of Redmon is recommended.
 InstalledRedmonDiffers=The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
 ConsoleSupport=Support for command line only mode
+PDFSupport=Advanced PDF support (iText)
 
 ; German translation:
 de.InstallFaxPrinter=Einen Faxdrucker installieren
@@ -309,7 +279,8 @@ Russian=Русский
 [Tasks]
 Name: DesktopIcon; Description: {cm:CreateDesktopIcon}; Components: base
 Name: GhostScript; Description: {cm:InstallGSTask}; Components: base
-Name: tiff2pdf; Description: {cm:InstallTIFFTask}; Components: base
+Name: tiff2pdf; Description: {cm:InstallTIFFTask}; Flags: unchecked; Components: base
+
 [Languages]
 Name: en; MessagesFile: compiler:Default.isl
 Name: de; MessagesFile: compiler:Languages\German.isl; InfoBeforeFile: temp\README_de.txt
@@ -318,7 +289,8 @@ Name: es; MessagesFile: compiler:Languages\Spanish.isl; InfoBeforeFile: temp\REA
 Name: it; MessagesFile: compiler:Languages\Italian.isl
 Name: pl; MessagesFile: compiler:Languages\Polish.isl
 Name: ru; MessagesFile: compiler:Languages\Russian.isl; InfoBeforeFile: temp\README_ru.txt
-Name: tr; MessagesFile: compiler:Languages\Turkish.isl; InfoBeforeFile: temp\README_tr.txt
+;Name: tr; MessagesFile: compiler:Languages\Turkish.isl; InfoBeforeFile: temp\README_tr.txt
+
 [Code]
 var bInstallGS: boolean;
     bInstallTIFF: boolean;
@@ -332,7 +304,8 @@ const
     ghostscriptdllkey = 'SOFTWARE\GPL Ghostscript';
     tiffkey = 'SOFTWARE\GnuWin32\Tiff';
     tiffpath = 'http://downloads.sourceforge.net/sourceforge/gnuwin32/tiff-3.8.2-1.exe';
-    setupsig = '# Auto-generated by YajHFC setup. Remove this line if you manually edit this file, else it will get overwritten on a update';
+    setupsigold = '# Auto-generated by YajHFC setup. Remove this line if you manually edit this file, else it will get overwritten on a update';
+    setupsig = '# Auto-generated by YajHFC setup. Do not edit this file!';
 
 function checkJavaVersion(SOFTWAREprefix: string; var javaver: string):boolean;
 var javamajor, javaminor, p: integer;
@@ -776,15 +749,18 @@ var
 begin
   tiffExe := getTIFFExe();
   gsExe := getGSExe();
-  settingsFile := ExpandConstant('{app}\settings.default');
   haveTIFFAndGS := true;
 
+  // Check if there is a pre-0.5.2 settings file around...
+  settingsFile := ExpandConstant('{app}\settings.default');
   if fileExists(settingsFile) then
   begin
     loadStringsFromFile(settingsFile, lines);
-    if lines[0] <> setupsig then
-      exit;
+    if lines[0] = setupsigold then
+      DeleteFile(settingsFile);
   end;
+
+  settingsFile := ExpandConstant('{app}\settings.d\path-settings.default');
 
   log('Writing settings.default...');
   setArrayLength(lines, 6);
@@ -796,8 +772,9 @@ begin
     StringChangeEx(tiffExe, ':', '\:', true);
     lines[1] := 'tiff2PDFLocation=' + tiffExe;
   end
-  else
-    haveTIFFAndGS := false;
+  else if (not IsComponentSelected('pdf')) then
+    haveTIFFAndGS := false; // iText gives an alternate conversion method
+
   if (gsExe <> '') and fileexists(gsExe) then
   begin
     StringChangeEx(gsExe, '\', '\\', true);

@@ -21,6 +21,8 @@ done
 
 mkdir -p $PREFIX/share/yajhfc
 install -m 0644 yajhfc.jar $PREFIX/share/yajhfc
+install -m 0644 logo-large.png $PREFIX/share/yajhfc
+ln -s ../java $PREFIX/usr/share/yajhfc/lib 
 
 mkdir -p $PREFIX/share/pixmaps
 install -m 0644 yajhfc-48x48.png $PREFIX/share/pixmaps/yajhfc.png

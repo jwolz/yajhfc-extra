@@ -54,3 +54,15 @@ Description: Command line only mode for YajHFC
  cyajhfc is an addon to YajHFC which allows to send faxes using a command line interface only, without invoking a graphical user interface.
  .
  The basic configuration must still be done using the graphical interface, however.
+
+Package: yajhfc-pdfplugin
+Architecture: all
+Depends: yajhfc, libitext-java
+Description: PDF plugin for YajHFC
+ This plugin uses iText to add advanced PDF support in YajHFC:
+   * PDF cover pages
+   * Image to PDF conversion without an external program
+   * Text extraction from PDF 
+ .
+ The package itself does not contain iText, but depends on the respective Debian/Ubuntu package instead.
+

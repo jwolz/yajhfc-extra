@@ -37,15 +37,17 @@ SCRIPTNAME=`basename $0`
 if [ -n "$CLASSPATH" ]; then
   CLASSPATH=$CLASSPATH:/usr/share/yajhfc/yajhfc.jar
   LAUNCHER=yajhfc.Launcher
+  SPLASH=-splash:/usr/share/yajhfc/logo-large.png
 
   if [ $SCRIPTNAME = cyajhfc ]; then
     CLASSPATH=$CLASSPATH:/usr/share/yajhfc/yajhfc-console.jar
     LAUNCHER=yajhfc.console.Launcher
+    SPLASH=""
   fi
 
   export CLASSPATH
 
-  exec $JAVA $LAUNCHER $YAJHFCARGS "$@"
+  exec $JAVA $SPLASH $LAUNCHER $YAJHFCARGS "$@"
 else
   JARFILE=/usr/share/yajhfc/yajhfc.jar
 

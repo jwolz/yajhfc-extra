@@ -11,7 +11,7 @@ PREFIX="$1"
 cd cups
 
 mkdir -p $PREFIX/etc/yajhfc
-install -m 0644 settings.override $PREFIX/etc/yajhfc
+install -m 0644 faxprinter.override $PREFIX/etc/yajhfc/settings.d
 
 mkdir -p $PREFIX/etc/xdg/autostart
 install -m 0644 yajhfc-autostart.desktop $PREFIX/etc/xdg/autostart

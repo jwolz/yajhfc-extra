@@ -55,6 +55,7 @@ install: build
 	sh install-console.sh $(CURDIR)/debian/yajhfc-console
 	sh install-faxprinter.sh $(CURDIR)/debian/yajhfc-faxprinter
 	sh install-fopplugin.sh $(CURDIR)/debian/yajhfc-fopplugin
+	sh install-pdfplugin.sh $(CURDIR)/debian/yajhfc-pdfplugin
 
 
 # Build architecture-independent files here.
