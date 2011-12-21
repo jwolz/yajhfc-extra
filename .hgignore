@@ -1,0 +1,9 @@
+linux-pkg/rpm/files/*
+util/build.log
+winsetup/Output/*
+winsetup/RedMonEE/*
+winsetup/redmon/*
+winsetup/redmon17.zip
+winsetup/redmon64/*
+winsetup/temp/*
+
