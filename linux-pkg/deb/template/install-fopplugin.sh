@@ -12,7 +12,6 @@ cd fopplugin
 
 mkdir -p $PREFIX/usr/share/yajhfc
 install -m 0644 FOPPlugin.jar $PREFIX/usr/share/yajhfc
-ln -s ../java $PREFIX/usr/share/yajhfc/lib 
 
 mkdir -p $PREFIX/usr/share/doc/yajhfc-fopplugin
 install -m 0644 readme.pdf $PREFIX/usr/share/doc/yajhfc-fopplugin

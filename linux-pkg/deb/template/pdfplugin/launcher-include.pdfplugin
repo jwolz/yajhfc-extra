@@ -1,0 +1,3 @@
+YAJHFCARGS="$YAJHFCARGS --loadplugin /usr/share/yajhfc/yajhfc-pdf-plugin.jar"
+CLASSPATH="$CLASSPATH:/usr/share/java/itext.jar"
+
