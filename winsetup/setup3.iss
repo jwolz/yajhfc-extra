@@ -30,7 +30,10 @@ Source: ..\..\..\workspace\yajhfc-console\dist\README.txt; DestName: README-cyaj
 Source: ..\..\..\workspace\yajhfc-pdf-plugin\build\yajhfc-pdf-plugin.jar; DestDir: {app}; Components: pdf
 Source: {#ITEXT_DIR}\{#ITEXT_JAR}; DestDir: {app}\lib; Components: pdf
 Source: pdf-plugin.default; DestDir: {app}\settings.d; Components: pdf
-; TODO: examples...
+Source: ..\..\..\workspace\yajhfc-pdf-plugin\dist\examples\cover.pdf; DestDir: {app}\examples; Components: pdf
+Source: ..\..\..\workspace\yajhfc-pdf-plugin\dist\examples\cover-src.odt; DestDir: {app}\examples; Components: pdf
+Source: ..\..\..\workspace\yajhfc-pdf-plugin\dist\doc\Creating_PDF_coverpages.pdf; DestDir: {app}; Components: pdf
+
 
 ; Redmon: Common files (docs):
 Source: redmon\LICENCE; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
@@ -96,6 +99,14 @@ Source: ..\cover\SomeLogo.png; DestDir: {app}\examples; Components: docs
 
 Source: c:\programme\istool\isxdl.dll; DestDir: {tmp}; Flags: dontcopy
 
+; mfilemon stuff
+Source: ..\..\..\..\downloads\mfilemon-setup.exe; DestDir: {tmp}; Flags: deleteafterinstall; Components: faxprinter/mfilemon
+Source: pipeprint.cmd; DestDir: {app}; Components: faxprinter/mfilemon
+Source: mfilemon-named-pipe.override; DestDir: {app}\settings.d; Components: faxprinter/mfilemon
+; JNA (currently only for mfilemon)
+Source: ..\..\..\jna\jna.jar; DestDir: {app}\lib; Components: faxprinter/mfilemon
+Source: ..\..\..\jna\platform.jar; DestDir: {app}\lib; Components: faxprinter/mfilemon
+
 [Dirs]
 Name: "{app}\settings.d"
 
@@ -131,6 +142,8 @@ Name: {group}\FAQ ({cm:German}); Filename: {app}\faq_de.pdf; Components: docs
 Name: {group}\FAQ ({cm:Russian}); Filename: {app}\faq_ru.pdf; Components: docs
 Name: {group}\FAQ ({cm:Spanish}); Filename: {app}\faq_es.pdf; Components: docs
 Name: {group}\FAQ ({cm:Turkish}); Filename: {app}\faq_tr.pdf; Components: docs
+Name: {group}\How to create PDF cover pages; Filename: {app}\Creating_PDF_coverpages.pdf; Components: pdf
+
 
 [Registry]
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: instpath; ValueData: {app}; Flags: uninsdeletekey
@@ -138,6 +151,7 @@ Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: jarfile; Valu
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: version; ValueData: {#VERSION}; Flags: uninsdeletekey
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: printlaunchyajhfcparams; ValueData: "{#AdditionalLaunchArgs} --stdin"; Flags: uninsdeletekey; Components: faxprinter/redmon
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Print\Monitors\{cm:redmonname}\Ports\YAJHFC:; Flags: uninsdeletekey dontcreatekey; Components: faxprinter/redmon faxprinter/redmonee
+Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Print\Monitors\Multi File Port Monitor\Ports\YAJHFC:; Flags: uninsdeletekey dontcreatekey; Components: faxprinter/mfilemon
 
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: addLaunchArg.PDFplugin; ValueData: "--loadplugin=""{app}\yajhfc-pdf-plugin.jar"""; Flags: uninsdeletekeyifempty uninsdeletevalue; Components: pdf
 
@@ -147,26 +161,29 @@ Name: Docs; Description: {cm:Documentation}; Types: full
 Name: FaxPrinter; Description: {cm:InstallFaxPrinter}; Types: full
 Name: FaxPrinter/Redmon; Description: {cm:RedmonComponentDesc}; Types: full; Flags: exclusive
 Name: FaxPrinter/RedmonEE; Description: {cm:RedmonEEComponentDesc}; Flags: exclusive
+Name: FaxPrinter/mfilemon; Description: {cm:mfilemonComponentDesc}; Flags: exclusive
 Name: Console; Description: {cm:ConsoleSupport}; Types: full
 Name: PDF; Description: {cm:PDFSupport}; Types: full
 
 [Run]
-Filename: rundll32; StatusMsg: {cm:RemovingX,{cm:faxprinter}}; Components: faxprinter/redmon faxprinter/redmonee; Parameters: "printui.dll,PrintUIEntry /dl /n ""{cm:printername}"""; Check: RemoveOldPrinter; MinVersion: 0,5.0
+Filename: rundll32; StatusMsg: {cm:RemovingX,{cm:faxprinter}}; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; Parameters: "printui.dll,PrintUIEntry /dl /n ""{cm:printername}"""; Check: RemoveOldPrinter; MinVersion: 0,5.0
 Filename: unredmon.exe; WorkingDir: {sys}; StatusMsg: {cm:RemovingX,RedMon}; Components: FaxPrinter/Redmon FaxPrinter/RedmonEE; Check: RemoveOldPrinter; BeforeInstall: RemoveYajHFCPort; Parameters: /Q
 
 Filename: {app}\redmon\setup.exe; WorkingDir: {app}\redmon; StatusMsg: {cm:InstallingX,RedMon}; Components: FaxPrinter/Redmon; Check: RedmonNotInstalled; Parameters: /Q
 Filename: {app}\redmonee\setup.exe; WorkingDir: {app}\redmonee; StatusMsg: {cm:InstallingX,RedMonEE}; Components: FaxPrinter/RedmonEE; Check: RedmonNotInstalled; Parameters: /Q
-Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Apple LaserWriter 16/600 PS"""; Components: faxprinter/redmon faxprinter/redmonee; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,5.0; OnlyBelowVersion: 0,6.0
-Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""FX DP 305-AP PS"""; Components: faxprinter/redmon faxprinter/redmonee; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,6.0; OnlyBelowVersion: 0,6.01
-Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Xerox Phaser 6120 PS"""; Components: faxprinter/redmon faxprinter/redmonee; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,6.01
+Filename: {tmp}\mfilemon-setup.exe; WorkingDir: {tmp}; StatusMsg: {cm:InstallingX,mfilemon}; Components: FaxPrinter/mfilemon; Check: mfilemonNotInstalled; Parameters: /SILENT
+Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Apple LaserWriter 16/600 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,5.0; OnlyBelowVersion: 0,6.0
+Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""FX DP 305-AP PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,6.0; OnlyBelowVersion: 0,6.01
+Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Xerox Phaser 6120 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,6.01
 
 Filename: {app}\w98info.txt; Flags: shellexec; OnlyBelowVersion: 0,5.0; Components: faxprinter/redmon faxprinter/redmonee
 ;Filename: {code:GSSetupPath}; Check: InstallGS; StatusMsg: {cm:InstallingX,GhostScript}; Parameters: -auto
 Filename: {code:GSSetupPath}; Check: InstallGS; StatusMsg: {cm:InstallingX,GhostScript}; Parameters: /S
 Filename: {code:TIFFSetupPath}; Check: InstallTIFF; StatusMsg: {cm:InstallingX,tiff2pdf}; Parameters: /SILENT
 [UninstallRun]
-Filename: rundll32; Components: faxprinter/redmon faxprinter/redmonee; Parameters: "printui.dll,PrintUIEntry /dl /n ""{cm:printername}"""; RunOnceId: DeletePrinter; MinVersion: 0,5.0
+Filename: rundll32; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; Parameters: "printui.dll,PrintUIEntry /dl /n ""{cm:printername}"""; RunOnceId: DeletePrinter; MinVersion: 0,5.0
 Filename: reg; Components: faxprinter/redmon faxprinter/redmonee; Parameters: "delete ""HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\{cm:redmonname}\Ports\YAJHFC:"" /f"; RunOnceId: DeletePort; MinVersion: 0,5.0
+Filename: reg; Components: faxprinter/mfilemon; Parameters: "delete ""HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\Multi File Port Monitor\YAJHFC:"" /f"; RunOnceId: DeletePort; MinVersion: 0,5.0
 Filename: unredmon.exe; WorkingDir: {sys}; Components: FaxPrinter/Redmon FaxPrinter/RedmonEE; RunOnceId: RemoveRedmon
 [INI]
 Filename: {group}\Homepage.url; Section: InternetShortcut; Key: URL; String: http://www.yajhfc.de/
@@ -185,6 +202,7 @@ DebugMode=debug mode
 YajHFCName=YajHFC fax client
 RedmonComponentDesc=Redmon
 RedmonEEComponentDesc=RedmonEE
+mfilemonComponentDesc=mfilemon (Named Pipe)
 
 ; English/Default text:
 InstallFaxPrinter=Install a fax printer
@@ -198,6 +216,7 @@ InstallTIFFTask=Download and install tiff2pdf (if not already installed)
 PreserveDLMsg=Save downloaded files on the desktop?
 RedmonEE32bitOnly=RedmonEE is only supported on 32bit versions of Windows.
 RedmonEERecommended=On this version of Windows, using RedmonEE instead of Redmon is recommended.
+mfilemonRecommended=On this version of Windows, using mfilemon instead of Redmon is recommended.
 InstalledRedmonDiffers=The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
 ConsoleSupport=Support for command line only mode
 PDFSupport=Advanced PDF support (iText)
@@ -365,6 +384,11 @@ begin
 	result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Monitors\' + CustomMessage('redmonname'));
 end;
 
+function mfilemonNotInstalled(): Boolean;
+begin
+	result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Monitors\Multi File Port Monitor');
+end;
+
 function NoYajHFCPrinter(): Boolean;
 begin
 	result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Printers\' + CustomMessage('printername'));
@@ -470,6 +494,38 @@ begin
   RegWriteDWordValue(HKEY_LOCAL_MACHINE, portkey, 'FileNumber', 0);
 end;
 
+// Install port for mfilemon
+procedure InstallYajHFCPortMFileMon();
+var mfkey, portkey: string;
+    exitCode:integer;
+begin
+	mfkey := 'SYSTEM\CurrentControlSet\Control\Print\Monitors\Multi File Port Monitor';
+	if not RegKeyExists(HKEY_LOCAL_MACHINE, mfkey) then
+	begin
+		MsgBox('Could not create a port for YajHFC (mfilemon not correctly installed).', mbError, MB_OK);
+		exit;
+	end;
+
+	portkey := mfkey + '\YAJHFC:';
+	if RegKeyExists(HKEY_LOCAL_MACHINE, portkey) then
+		Log('YAJHFC: port seems to already exist. Continuing anyway...'); // Port already created ??
+
+	RegWriteStringValue(HKEY_LOCAL_MACHINE, portkey, 'ExecPath', ExpandConstant('{win}\Temp'));
+	RegWriteStringValue(HKEY_LOCAL_MACHINE, portkey, 'FilePattern', 'yajhfc-%u-%i.tmp');
+	RegWriteStringValue(HKEY_LOCAL_MACHINE, portkey, 'OutputPath', ExpandConstant('{win}\Temp'));
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, portkey, 'UserCommand', ExpandConstant('{cmd} /c "{app}\pipeprint.cmd"') + ' %f yajhfc-%u');
+  RegWriteDWordValue(HKEY_LOCAL_MACHINE, portkey, 'Overwrite', 0);
+  RegWriteDWordValue(HKEY_LOCAL_MACHINE, portkey, 'PipeData', 0);
+  RegWriteDWordValue(HKEY_LOCAL_MACHINE, portkey, 'WaitTermination', 0);
+
+  Log('Restarting spooler...');
+  if not Exec('cmd', '/c echo Restarting spooler, please wait... && net stop spooler && net start spooler', '', SW_SHOW, ewWaitUntilTerminated, exitCode) then
+  begin
+    MsgBox('Could not restart spooler service.', mbError, MB_OK);
+		exit;
+  end;
+end;
+
 // Detects which version of Redmon is installed
 // 0: No Redmon installed
 // 1: "Normal" Redmon installed
@@ -491,32 +547,41 @@ begin
   end;
 end;
 
-procedure InstallYajHFCPort();
-begin
-  if (DetectInstalledRedmonVersion = 2) then
-    InstallYajHFCPortEE()
-  else
-    InstallYajHFCPortNormal();
-end;
-
 procedure RemoveYajHFCPort();
 begin
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Monitors\' + CustomMessage('redmonname') + '\Ports\YAJHFC:')
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Monitors\' + CustomMessage('redmonname') + '\Ports\YAJHFC:');
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Monitors\Multi File Port Monitor\YAJHFC:');
 end;
 
-function IsRedmonEERecommended(): boolean;
+procedure InstallYajHFCPort();
+begin
+  RemoveYajHFCPort;
+  if IsComponentSelected('faxprinter/mfilemon') then
+    InstallYajHFCPortMFileMon()
+  else
+    if (DetectInstalledRedmonVersion() = 2) then
+      InstallYajHFCPortEE()
+    else
+      InstallYajHFCPortNormal();
+end;
+
+function IsTerminalServer(): boolean;
 var winver: TWindowsVersion;
 begin
-   if IsWin64 then
-   begin
-     result := false;
-     exit;
-   end;
-
    GetWindowsVersionEx(winver);
    result := (winver.ProductType = VER_NT_DOMAIN_CONTROLLER) or
              (winver.ProductType = VER_NT_SERVER) or
              ((winver.SuiteMask and (VER_SUITE_TERMINAL or VER_SUITE_SMALLBUSINESS or VER_SUITE_SMALLBUSINESS_RESTRICTED)) <> 0);
+end;
+
+function IsRedmonEERecommended(): boolean;
+begin
+   result := IsTerminalServer and not IsWin64;
+end;
+
+function IsMfilemonRecommended(): boolean;
+begin
+   result := IsTerminalServer and IsWin64;   
 end;
 
 function RemoveOldPrinter(): boolean;
@@ -830,6 +895,10 @@ begin
         if IsRedmonEERecommended then
         begin
           MsgBox(CustomMessage('RedmonEERecommended'), mbInformation, MB_OK);
+        end
+        else if IsMfilemonRecommended then
+        begin
+          MsgBox(CustomMessage('mfilemonRecommended'), mbInformation, MB_OK);
         end;
       end;
       if result then
@@ -839,7 +908,7 @@ begin
         log('Found installed Redmon version of ' + IntToStr(installedredmonver));
         if installedredmonver > 0 then //Some redmon version already installed
         begin
-          if ((installedRedmonVer <> 1) and IsComponentSelected('faxprinter/redmon')) or
+          if ((installedRedmonVer <> 1) and IsComponentSelected('faxprinter/redmon'))   or
              ((installedRedmonVer <> 2) and IsComponentSelected('faxprinter/redmonee')) then
           begin
              if MsgBox(CustomMessage('InstalledRedmonDiffers'), mbConfirmation, MB_YESNO) = IDYES then
@@ -867,7 +936,9 @@ end;
 procedure InitializeWizard();
 begin
   if IsRedmonEERecommended then
-    CheckComponent(CustomMessage('RedmonEEComponentDesc'));
+    CheckComponent(CustomMessage('RedmonEEComponentDesc'))
+  else if IsMfilemonRecommended then
+    CheckComponent(CustomMessage('mfilemonComponentDesc'));
 end;
 
 

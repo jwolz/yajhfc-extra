@@ -1,0 +1,10 @@
+Template: yajhfc-faxprinter/autostart
+Type: boolean
+Default: true
+Description: Automatically start YajHFC on login?
+ For the fax printer to work YajHFC must be running when the user prints to it.
+ .
+ Selecting yes for this option adds an entry to /etc/xdg/autostart to make sure YajHFC
+ is automatically started when starting most desktop environments.
+ You can later change this using dpkg-reconfigure if you want.
+

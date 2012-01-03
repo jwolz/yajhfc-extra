@@ -6,9 +6,10 @@ This package automatically installs a virtual fax printer named "yajhfc" in CUPS
 In order for this printer to work YajHFC must be auto started and kept running
 for every user wishing to print.
 
-To achieve this, a .desktop file is added to /etc/xdg/autostart to ensure YajHFC
+To achieve this, by default a .desktop file is added to /etc/xdg/autostart to ensure YajHFC
 is auto started by any desktop environment implementing the Free Desktop Menu Specification
 (this includes at least KDE, GNOME and XFCE).
+If you do not like this, you can use "dpkg-reconfigure yajhfc-faxprinter" to change this.
 If your preferred desktop environment does not use these files, it is your responsibility
 to make sure YajHFC is running when you wish to print.
 
