@@ -22,6 +22,10 @@ case "$1" in
 	# Ignore if removing the printer fails (e.g. if the user renamed it)
 	set +e
 	lpadmin -x yajhfc
+
+        if [ -e /etc/xdg/autostart/yajhfc-autostart.desktop ]; then
+          rm -f /etc/xdg/autostart/yajhfc-autostart.desktop
+	fi
 	set -e
     ;;
 

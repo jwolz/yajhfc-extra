@@ -5,6 +5,7 @@
 
 set -e
 
+
 # summary of how this script can be called:
 #        * <postinst> `configure' <most-recently-configured-version>
 #        * <old-postinst> `abort-upgrade' <new version>
@@ -16,16 +17,27 @@ set -e
 #          <conflicting-package> <version>
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
-
+. /usr/share/debconf/confmodule
 
 case "$1" in
-    configure)
+    configure|reconfigure)
         if lpstat -p yajhfc >/dev/null 2>&1 ; then
 	  echo 'YajHFC fax printer already exists.'
 	else
 	  #/etc/init.d/cups force-reload
        	  lpadmin -p yajhfc -D 'YajHFC virtual fax printer' -L 'localhost' -v 'yajhfc:/tmp/yajhfc-$USERNAME' -E -P /usr/share/yajhfc/yajhfc.ppd -o "printer-error-policy=abort-job" -o "printer-is-shared=false"
 	  echo 'Virtual fax printer "yajhfc" created. (Re)Start YajHFC to fully enable it.'
+	fi
+
+	db_get yajhfc-faxprinter/autostart
+	if [ "$RET" = true ]; then
+	  if [ ! -e /etc/xdg/autostart/yajhfc-autostart.desktop ]; then
+	     ln -sf /usr/share/yajhfc/yajhfc-autostart.desktop /etc/xdg/autostart/yajhfc-autostart.desktop
+	  fi 
+	else
+	  if [ -e /etc/xdg/autostart/yajhfc-autostart.desktop ]; then
+	    rm -f /etc/xdg/autostart/yajhfc-autostart.desktop
+	  fi
 	fi
     ;;
 
