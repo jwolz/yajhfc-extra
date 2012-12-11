@@ -6,7 +6,7 @@
 #define APPVERNAME APPNAME + " " + VERSION
 
 #define ITEXT_DIR "..\..\..\..\build\itext"
-#define ITEXT_JAR "itextpdf-5.1.3.jar"
+#define ITEXT_JAR "itextpdf-5.2.1.jar"
 
 [Files]
 Source: ..\..\..\workspace\yajhfc\build\yajhfc.jar; DestDir: {app}; Components: base
@@ -100,18 +100,18 @@ Source: ..\cover\SomeLogo.png; DestDir: {app}\examples; Components: docs
 Source: c:\programme\istool\isxdl.dll; DestDir: {tmp}; Flags: dontcopy
 
 ; mfilemon stuff
-Source: ..\..\..\..\downloads\mfilemon-setup.exe; DestDir: {tmp}; Flags: deleteafterinstall; Components: faxprinter/mfilemon
+;Source: ..\..\..\..\downloads\mfilemon-setup.exe; DestDir: {tmp}; Flags: deleteafterinstall; Components: faxprinter/mfilemon
 Source: pipeprint.cmd; DestDir: {app}; Components: faxprinter/mfilemon
 Source: mfilemon-named-pipe.override; DestDir: {app}\settings.d; Components: faxprinter/mfilemon
 ; JNA (currently only for mfilemon)
-Source: ..\..\..\jna\jna.jar; DestDir: {app}\lib; Components: faxprinter/mfilemon
-Source: ..\..\..\jna\platform.jar; DestDir: {app}\lib; Components: faxprinter/mfilemon
+Source: {code:JNAJarPath}; DestDir: {app}\lib; DestName: jna.jar; Flags: external; ExternalSize: 1006639; Components: faxprinter/mfilemon
+Source: {code:PlatformJarPath}; DestDir: {app}\lib; DestName: platform.jar; Flags: external; ExternalSize: 913435; Components: faxprinter/mfilemon
 
 [Dirs]
 Name: "{app}\settings.d"
 
 [Setup]
-AppCopyright=© 2005-2011 by Jonas Wolz
+AppCopyright=© 2005-2012 by Jonas Wolz
 AppName={#APPNAME}
 AppVerName={#APPVERNAME}
 InfoBeforeFile=temp\README.txt
@@ -143,6 +143,7 @@ Name: {group}\FAQ ({cm:Russian}); Filename: {app}\faq_ru.pdf; Components: docs
 Name: {group}\FAQ ({cm:Spanish}); Filename: {app}\faq_es.pdf; Components: docs
 Name: {group}\FAQ ({cm:Turkish}); Filename: {app}\faq_tr.pdf; Components: docs
 Name: {group}\How to create PDF cover pages; Filename: {app}\Creating_PDF_coverpages.pdf; Components: pdf
+Name: {commonstartup}\{cm:YajHFCName}; Filename: {#LaunchEXE}; Parameters: "{#LaunchEXEArgs} --windowstate=T"; WorkingDir: {app}; IconFilename: {app}\yajhfc.ico; IconIndex: 0; Tasks: Autostart
 
 
 [Registry]
@@ -171,7 +172,7 @@ Filename: unredmon.exe; WorkingDir: {sys}; StatusMsg: {cm:RemovingX,RedMon}; Com
 
 Filename: {app}\redmon\setup.exe; WorkingDir: {app}\redmon; StatusMsg: {cm:InstallingX,RedMon}; Components: FaxPrinter/Redmon; Check: RedmonNotInstalled; Parameters: /Q
 Filename: {app}\redmonee\setup.exe; WorkingDir: {app}\redmonee; StatusMsg: {cm:InstallingX,RedMonEE}; Components: FaxPrinter/RedmonEE; Check: RedmonNotInstalled; Parameters: /Q
-Filename: {tmp}\mfilemon-setup.exe; WorkingDir: {tmp}; StatusMsg: {cm:InstallingX,mfilemon}; Components: FaxPrinter/mfilemon; Check: mfilemonNotInstalled; Parameters: /SILENT
+Filename: {code:mfilemonSetupPath}; WorkingDir: {tmp}; StatusMsg: {cm:InstallingX,mfilemon}; Components: FaxPrinter/mfilemon; Check: mfilemonNotInstalled; Parameters: /SILENT
 Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Apple LaserWriter 16/600 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,5.0; OnlyBelowVersion: 0,6.0
 Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""FX DP 305-AP PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,6.0; OnlyBelowVersion: 0,6.01
 Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Xerox Phaser 6120 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; BeforeInstall: InstallYajHFCPort(); MinVersion: 0,6.01
@@ -191,6 +192,12 @@ Filename: {group}\Homepage.url; Section: InternetShortcut; Key: URL; String: htt
 Type: files; Name: {group}\Homepage.url
 Type: files; Name: {app}\settings.d\path-settings.default
 Type: files; Name: {app}\tiff2pdf.cmd
+
+[Tasks]
+Name: DesktopIcon; Description: {cm:CreateDesktopIcon}; Components: base
+Name: Autostart; Description: {cm:CreateAutostart}; Components: base
+Name: GhostScript; Description: {cm:InstallGSTask}; Components: base
+Name: tiff2pdf; Description: {cm:InstallTIFFTask}; Flags: unchecked; Components: base
 
 [CustomMessages]
 ; Do not translate redmonname
@@ -220,6 +227,8 @@ mfilemonRecommended=On this version of Windows, using mfilemon instead of Redmon
 InstalledRedmonDiffers=The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
 ConsoleSupport=Support for command line only mode
 PDFSupport=Advanced PDF support (iText)
+CreateAutostart=Automatically start YajHFC on login
+mfilemonWantsAutostart=You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
 
 ; German translation:
 de.InstallFaxPrinter=Einen Faxdrucker installieren
@@ -235,6 +244,8 @@ de.RedmonEE32bitOnly=RedmonEE wird nur auf 32bit-Versionen von Windows unterstü
 de.RedmonEERecommended=Auf dieser Version von Windows wird empfohlen, RedmonEE anstatt von Redmon zu verwenden.
 de.InstalledRedmonDiffers=Die auf diesem Computer bereits installierte Redmon-Version weicht von der zur Installation ausgewählten ab. Möchten Sie, dass Setup die bereits installierte Version deinstalliert? (Wenn Sie "Nein" auswählen, wird YajHFC die bereits installierte Version weiterbenutzen.)
 de.ConsoleSupport=Unterstützung für Nur-Kommandozeilenmodus
+de.PDFSupport=Erweiterte PDF-Unterstützung (iText)
+de.CreateAutostart=YajHFC automatisch beim Einloggen starten
 
 ; Spanish translation:
 es.InstallFaxPrinter=Instalar una impresora de faxes
@@ -295,11 +306,6 @@ French=Français
 Turkish=Türkçe
 Russian=Русский
 
-[Tasks]
-Name: DesktopIcon; Description: {cm:CreateDesktopIcon}; Components: base
-Name: GhostScript; Description: {cm:InstallGSTask}; Components: base
-Name: tiff2pdf; Description: {cm:InstallTIFFTask}; Flags: unchecked; Components: base
-
 [Languages]
 Name: en; MessagesFile: compiler:Default.isl
 Name: de; MessagesFile: compiler:Languages\German.isl; InfoBeforeFile: temp\README_de.txt
@@ -315,14 +321,20 @@ var bInstallGS: boolean;
     bInstallTIFF: boolean;
     sGSSetupPath: string;
     sTIFFSetupPath:string;
+    smfilemonSetupPath: string;
+    sJnaJarPath: string;
+    sPlatformJarPath: string;
     preserveDownload: integer;
     bRemoveOldPrinter: boolean;
 const
-    ghostscript32path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs904w32.exe';
-    ghostscript64path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs904w64.exe';
+    ghostscript32path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs905w32.exe';
+    ghostscript64path = 'http://downloads.sourceforge.net/sourceforge/ghostscript/gs905w64.exe';
     ghostscriptdllkey = 'SOFTWARE\GPL Ghostscript';
     tiffkey = 'SOFTWARE\GnuWin32\Tiff';
-    tiffpath = 'http://downloads.sourceforge.net/sourceforge/gnuwin32/tiff-3.8.2-1.exe';
+    tiffURL = 'http://downloads.sourceforge.net/sourceforge/gnuwin32/tiff-3.8.2-1.exe';
+    mfilemonURL = 'http://downloads.sourceforge.net/project/mfilemon/1.4.1%20%282011-01-07%29/mfilemon-setup.exe';
+    jnajarURL = 'http://download.yajhfc.de/misc/jna/jna.jar';
+    platformjarURL = 'http://download.yajhfc.de/misc/jna/platform.jar';
     setupsigold = '# Auto-generated by YajHFC setup. Remove this line if you manually edit this file, else it will get overwritten on a update';
     setupsig = '# Auto-generated by YajHFC setup. Do not edit this file!';
 
@@ -612,8 +624,20 @@ function GSSetupPath(Param: String): string;
 begin
   result := sGSSetupPath;
 end;
+function mfilemonSetupPath(Param: String): string;
+begin
+  result := smfilemonSetupPath;
+end;
+function jnaJarPath(Param: String): string;
+begin
+  result := sJnaJarPath;
+end;
+function platformJarPath(Param: String): string;
+begin
+  result := sPlatformJarPath;
+end;
 
-// Return value: 1 needed, 0 not needed, -1 do not download
+// Return value: 1 needed, 0 not needed, -10000 do not download
 function isDownloadNeeded(var setupPath: string; downloadURL: string): integer;
 var
   exeName: string;
@@ -639,7 +663,7 @@ begin
 		       IDNO:
   		        preserveDownload := 0;
 		       else
-	   	        result := -1;
+	   	        result := -10000;
 		       end;
 		   end;
 
@@ -759,21 +783,28 @@ begin
       else
         gsURL := ghostscript32path;
 
-      downloadNeeded := isDownloadNeeded(sGSSetupPath, gsURL);
+      downloadNeeded := downloadNeeded + isDownloadNeeded(sGSSetupPath, gsURL);
     end;
 
     if bInstallTIFF and (downloadNeeded >= 0) then
     begin
-      case isDownloadNeeded(sTIFFSetupPath, tiffpath) of
-       0: ; // Do nothing
-       1: downloadNeeded := 1;
-      -1: downloadNeeded := -1;
-      end;
+      downloadNeeded := downloadNeeded + isDownloadNeeded(sTIFFSetupPath, tiffURL);
+    end;
+
+    if IsComponentSelected('faxprinter/mfilemon') and (downloadNeeded >= 0) then
+    begin
+      if mfilemonNotInstalled then
+         downloadNeeded := downloadNeeded + isDownloadNeeded(sMfilemonSetupPath, mfilemonURL);
+
+      if (downloadNeeded >= 0) then
+        downloadNeeded := downloadNeeded + isDownloadNeeded(sJnaJarPath, JnaJarURL);
+      if (downloadNeeded >= 0) then
+        downloadNeeded := downloadNeeded + isDownloadNeeded(sPlatformJarPath, PlatformJarURL);
     end;
 
 		// don't try to init isxdl if it's not needed because it will error on < ie 3
 
-		if downloadNeeded = 1 then
+		if downloadNeeded >= 1 then
 			begin
 				hWnd := StrToInt(ExpandConstant('{wizardhwnd}'));
 				//isxdl_SetOption('label', 'Downloading Ghost');
@@ -880,6 +911,13 @@ begin
   case CurPage of
   wpReady:
       result := downloadFiles();
+  wpSelectTasks:
+      begin
+        if IsComponentSelected('faxprinter/mfilemon') and not IsTaskSelected('Autostart') then
+        begin
+          MsgBox(CustomMessage('mfilemonWantsAutostart'), mbInformation, MB_OK);
+        end;
+      end;
   wpSelectComponents:
     begin
       if IsComponentSelected('faxprinter/redmonee') then

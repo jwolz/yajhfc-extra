@@ -23,6 +23,9 @@ makepack() {
   CONSMSG=yajhfc-console/i18n/Messages.po
   LOCCONSMSG=yajhfc-console/i18n/Messages_$1.po
 
+  PDFMSG=yajhfc-pdf-plugin/i18n/Messages.po
+  LOCPDFMSG=yajhfc-pdf-plugin/i18n/Messages_$1.po
+
   CMDLINEOPTS=yajhfc/src/yajhfc/i18n/CommandLineOpts.po
   LOCCMDLINEOPTS=yajhfc/src/yajhfc/i18n/CommandLineOpts_$1.po
 
@@ -57,6 +60,17 @@ makepack() {
      popd > /dev/null
   fi
 
+  if [ "$INCLPDFMSG" = "y" -a -f $LOCPDFMSG ]; then
+     if [ ! -d $OUTDIR/pdf-plugin ]; then
+       mkdir $OUTDIR/pdf-plugin
+     fi
+     
+     cp $LOCPDFMSG $OUTDIR/pdf-plugin
+     pushd $OUTDIR > /dev/null
+     zip $OUT pdf-plugin/`basename $LOCPDFMSG` 
+     popd > /dev/null
+  fi
+
   echo "Output has been written to $OUT"
 }
 
@@ -65,6 +79,7 @@ read -p 'Include CommandLineOpts? [y/n]' INCLCMDLINEOPTS
 read -p 'Include README? [y/n]' INCLREADME
 read -p 'Include FOP Msg? [y/n]' INCLFOPMSG
 read -p 'Include Console Msg? [y/n]' INCLCONSMSG
+read -p 'Include PDF Msg? [y/n]' INCLPDFMSG
 read -p 'Upload stuff? [y/n]' UPLOADSTUFF
 
 OUTDIR=/tmp/yajhfc-trans
