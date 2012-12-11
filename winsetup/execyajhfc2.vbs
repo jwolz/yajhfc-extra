@@ -136,6 +136,11 @@ end function
 function getJavaArgsFromRegistry(userprofile)
 	getJavaArgsFromRegistry = getJavaArgs()
 	on error resume next
+	dim jobname
+	jobname = env("REDMON_DOCNAME")
+	if (not isEmpty(jobname) and jobname <> "") then
+		getJavaArgsFromRegistry = getJavaArgsFromRegistry & " --subject=""" & replace(jobname, """", "'") & """"
+	end if
 	getJavaArgsFromRegistry = getJavaArgsFromRegistry & " " & wshshell.regread("HKLM\Software\YajHFC\printlaunchyajhfcparams")
 	on error goto 0
 end function
@@ -290,11 +295,23 @@ if printlaunchmode then
 	copystdin = True
 else
 	launchargs = getJavaArgs & " " & launchargs
-	javaexe = "javaw.exe"
-	copystdin = False
+	
+        if fso.FileExists(javahome & "bin\javaw.exe") then
+		javaexe = "javaw.exe"	
+	else
+        	' Some Java versions do not seem to have javaw.exe...
+		javaexe = "java.exe"
+        end if
+        
+        copystdin = False
 	if dosaveenv then
 		saveCorrectEnv
 	end if
+end if
+
+if not fso.FileExists(javahome & "bin\" & javaexe) then
+	msgbox "Could not find the Java executable at """ & javahome & "bin\" & javaexe & """. Please check if Java has been installed correctly.", vbCritical, "Start YajHFC"
+	WScript.Quit(1)  
 end if
 
 commandline = """" & javahome & "bin\" & javaexe & """ " & launchargs 
