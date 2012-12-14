@@ -32,7 +32,7 @@ fi
 build() {
 ANT=ant
 ISCC="wine \"C:\Program Files\Inno Setup 5\ISCC\""
-ISSFILE=setup3.iss
+ISSFILE=setup4.iss
 FOPISSFILE=setup-fop.iss
 
 read YAJVER YAJVERDOT FOPVER FOPVERDOT  <<EOF
@@ -52,16 +52,16 @@ fi
 if [ $1 == all -o $1 == jar ]; then 
  echo "Building YajHFC..."
  cd $WORKSPACE/yajhfc
- $ANT clean fulldist
+ $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
  echo "Building FOPPlugin..."
  cd $WORKSPACE/FOPPlugin
- $ANT clean fulldist
+ $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
  echo "Building yajhfc-console..."
  cd $WORKSPACE/yajhfc-console
- $ANT clean fulldist
+ $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
  echo "Building yajhfc-pdf-plugin..."
  cd $WORKSPACE/yajhfc-pdf-plugin
- $ANT clean fulldist
+ $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
 
  echo "Copying files to output..."
  cp $WORKSPACE/yajhfc/build/yajhfc.jar $OUTPUT/yajhfc-$YAJVER.jar
