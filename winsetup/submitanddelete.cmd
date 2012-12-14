@@ -1,5 +1,5 @@
 @echo off
 echo Starting YajHFC...
-cscript "%~d0%~p0execyajhfc2.vbs" /wait --background "%1"
+"%~d0%~p0yajhfc.exe" "%1"
 echo Cleaning up...
 del "%1"
