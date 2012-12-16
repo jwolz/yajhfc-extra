@@ -28,6 +28,18 @@ mkdir -p $PREFIX/share/pixmaps
 install -m 0644 yajhfc-48x48.png $PREFIX/share/pixmaps/yajhfc.png
 install -m 0644 yajhfc.xpm $PREFIX/share/pixmaps/yajhfc.xpm
 
+mkdir -p $PREFIX/share/icons/hicolor/128x128/apps
+install -m 0644 logo-large.png $PREFIX/share/icons/hicolor/128x128/apps/yajhfc.png
+
+mkdir -p $PREFIX/share/icons/hicolor/16x16/apps
+install -m 0644 yajhfc-16x16.png $PREFIX/share/icons/hicolor/16x16/apps/yajhfc.png
+
+mkdir -p $PREFIX/share/icons/hicolor/32x32/apps
+install -m 0644 yajhfc-32x32.png $PREFIX/share/icons/hicolor/32x32/apps/yajhfc.png
+
+mkdir -p $PREFIX/share/icons/hicolor/48x48/apps
+install -m 0644 yajhfc-48x48.png $PREFIX/share/icons/hicolor/48x48/apps/yajhfc.png
+
 mkdir -p $PREFIX/share/applications
 install -m 0644 yajhfc.desktop $PREFIX/share/applications
 
