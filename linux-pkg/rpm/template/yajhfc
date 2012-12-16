@@ -7,11 +7,11 @@ JAVA=java
 # Directories to search java in
 #  Sun Java is preferred over other versions of Java here (especially GCJ does not work very well for YajHFC...)
 JAVADIRS="
-/usr/lib/jvm/jre-1.6.0-sun
-/usr/lib/jvm/jre-1.6.0-openjdk
-/usr/lib/jvm/jre-1.6.0
-/usr/lib/jvm/jre-sun
-/usr/lib/jvm/jre-openjdk
+/usr/lib/jvm/java-7-sun
+/usr/lib/jvm/java-6-sun
+/usr/lib/jvm/java-7-openjdk
+/usr/lib/jvm/java-6-openjdk
+/usr/lib/jvm/java-1.5.0-sun
 /usr
 "
 
@@ -24,5 +24,37 @@ for DIR in $JAVADIRS; do
   fi
 done
 
-exec $JAVA -jar /usr/share/yajhfc/yajhfc.jar "$@"
+# Include additional setup from other yajhfc-* paclages
+for F in /etc/yajhfc/launcher-include.* ; do
+  if [ -f $F ]; then
+    . $F
+  fi
+done
+
+
+SCRIPTNAME=`basename $0`
+
+if [ -n "$CLASSPATH" ]; then
+  CLASSPATH=$CLASSPATH:/usr/share/yajhfc/yajhfc.jar
+  LAUNCHER=yajhfc.Launcher
+  SPLASH=-splash:/usr/share/yajhfc/logo-large.png
+
+  if [ $SCRIPTNAME = cyajhfc ]; then
+    CLASSPATH=$CLASSPATH:/usr/share/yajhfc/yajhfc-console.jar
+    LAUNCHER=yajhfc.console.Launcher
+    SPLASH=""
+  fi
+
+  export CLASSPATH
+
+  exec $JAVA $SPLASH $LAUNCHER $YAJHFCARGS "$@"
+else
+  JARFILE=/usr/share/yajhfc/yajhfc.jar
+
+  if [ $SCRIPTNAME = cyajhfc ]; then
+    JARFILE=/usr/share/yajhfc/yajhfc-console.jar
+  fi
+
+  exec $JAVA -jar $JARFILE $YAJHFCARGS "$@"
+fi
 
