@@ -59,6 +59,10 @@ sh install-faxprinter.sh "%{buildroot}"
 /usr/share/pixmaps/yajhfc.xpm
 /usr/share/pixmaps/yajhfc.png
 /usr/share/man/man1/yajhfc.1.gz
+/usr/share/icons/hicolor/128x128/apps/yajhfc.png
+/usr/share/icons/hicolor/16x16/apps/yajhfc.png
+/usr/share/icons/hicolor/32x32/apps/yajhfc.png
+/usr/share/icons/hicolor/48x48/apps/yajhfc.png
 
 
 %post faxprinter
@@ -81,6 +85,8 @@ sh install-faxprinter.sh "%{buildroot}"
 
 
 %changelog
+* Sun Dec 16 2012 - jonas@yajhfc.de
+- Added more icons for yajhfc 
 * Sun Nov 06 2011 - jonas@yajhfc.de
 - Merged yajhfc.spec and yajhfc-faxprinter.spec 
 * Sun Oct 16 2011 - jonas@yajhfc.de
