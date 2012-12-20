@@ -2,7 +2,8 @@
 
 set -e
 
-WORKSPACE=~/java/workspace
+WORKSPACE=$HOME/java/workspace
+SETUP_ISS=`dirname $0`/../winsetup/setup4.iss
 
 makepack() {
   OUT=$OUTDIR/yajhfc_$1.zip
@@ -70,6 +71,12 @@ makepack() {
      zip $OUT pdf-plugin/`basename $LOCPDFMSG` 
      popd > /dev/null
   fi
+  
+  if [ "$INCLISSMSG" = "y" -a -f $OUTDIR/win-setup/setup_$1.txt ]; then
+     pushd $OUTDIR > /dev/null
+     zip $OUT win-setup/setup_$1.txt
+     popd > /dev/null
+  fi
 
   echo "Output has been written to $OUT"
 }
@@ -80,12 +87,18 @@ read -p 'Include README? [y/n]' INCLREADME
 read -p 'Include FOP Msg? [y/n]' INCLFOPMSG
 read -p 'Include Console Msg? [y/n]' INCLCONSMSG
 read -p 'Include PDF Msg? [y/n]' INCLPDFMSG
+read -p 'Include Windows Setup Msgs? [y/n]' INCLISSMSG
 read -p 'Upload stuff? [y/n]' UPLOADSTUFF
 
 OUTDIR=/tmp/yajhfc-trans
 
 if [ ! -d $OUTDIR ]; then
 	mkdir -p $OUTDIR
+fi
+
+if [ "$INCLISSMSG" = "y" ]; then
+  echo "Preparing setup msgs..."
+  java -cp $WORKSPACE/jtools/bin isstrans.MakeISSLangFiles $SETUP_ISS $OUTDIR/win-setup setup
 fi
 
 for PO in $WORKSPACE/yajhfc/src/yajhfc/i18n/messages_*.po ; do

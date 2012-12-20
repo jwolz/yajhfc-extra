@@ -219,6 +219,7 @@ RedmonEEComponentDesc=RedmonEE
 mfilemonComponentDesc=mfilemon (Named Pipe)
 
 ; English/Default text:
+; begin translation keys
 InstallFaxPrinter=Install a fax printer
 InstallingX=Installing %1...
 RemovingX=Removing %1...
@@ -237,23 +238,46 @@ PDFSupport=Advanced PDF support (iText)
 CreateAutostart=Automatically start YajHFC on login
 mfilemonWantsAutostart=You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
 InstallingPrinterPort=Installing YAJHFC: port...
+; end translation keys
 
 ; German translation:
-de.InstallFaxPrinter=Einen Faxdrucker installieren
-de.InstallingX=Installiere %1...
-de.RemovingX=Entferne %1...
-de.FaxPrinter=Faxdrucker
-de.CoreApplicationFiles=Zentrale Programmdateien
-de.Documentation=Dokumentation
-de.InstallGSTask=GhostScript herunterladen und installieren (falls noch nicht installiert)
-de.InstallTIFFTask=tiff2pdf herunterladen und installieren (falls noch nicht installiert)
-de.PreserveDLMsg=Heruntergeladene Dateien auf dem Desktop speichern?
-de.RedmonEE32bitOnly=RedmonEE wird nur auf 32bit-Versionen von Windows unterstützt.
-de.RedmonEERecommended=Auf dieser Version von Windows wird empfohlen, RedmonEE anstatt von Redmon zu verwenden.
-de.InstalledRedmonDiffers=Die auf diesem Computer bereits installierte Redmon-Version weicht von der zur Installation ausgewählten ab. Möchten Sie, dass Setup die bereits installierte Version deinstalliert? (Wenn Sie "Nein" auswählen, wird YajHFC die bereits installierte Version weiterbenutzen.)
+; translation for: Support for command line only mode
 de.ConsoleSupport=Unterstützung für Nur-Kommandozeilenmodus
-de.PDFSupport=Erweiterte PDF-Unterstützung (iText)
+; translation for: Core application files
+de.CoreApplicationFiles=Zentrale Programmdateien
+; translation for: Automatically start YajHFC on login
 de.CreateAutostart=YajHFC automatisch beim Einloggen starten
+; translation for: Documentation
+de.Documentation=Dokumentation
+; translation for: fax printer
+de.FaxPrinter=Faxdrucker
+; translation for: Install a fax printer
+de.InstallFaxPrinter=Einen Faxdrucker installieren
+; translation for: Download and install GhostScript (if not already installed)
+de.InstallGSTask=GhostScript herunterladen und installieren (falls noch nicht installiert)
+; translation for: Download and install tiff2pdf (if not already installed)
+de.InstallTIFFTask=tiff2pdf herunterladen und installieren (falls noch nicht installiert)
+; translation for: The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
+de.InstalledRedmonDiffers=Die auf diesem Computer bereits installierte Redmon-Version weicht von der zur Installation ausgewählten ab. Möchten Sie, dass Setup die bereits installierte Version deinstalliert? (Wenn Sie "Nein" auswählen, wird YajHFC die bereits installierte Version weiterbenutzen.)
+; translation for: Installing YAJHFC: port...
+de.InstallingPrinterPort=Installiere YAJHFC: Druckeranschluß...
+; translation for: Installing %1...
+de.InstallingX=Installiere %1...
+; translation for: Advanced PDF support (iText)
+de.PDFSupport=Erweiterte PDF-Unterstützung (iText)
+; translation for: Save downloaded files on the desktop?
+de.PreserveDLMsg=Heruntergeladene Dateien auf dem Desktop speichern?
+; translation for: RedmonEE is only supported on 32bit versions of Windows.
+de.RedmonEE32bitOnly=RedmonEE wird nur auf 32bit-Versionen von Windows unterstützt.
+; translation for: On this version of Windows, using RedmonEE instead of Redmon is recommended.
+de.RedmonEERecommended=Auf dieser Version von Windows wird empfohlen, RedmonEE anstatt von Redmon zu verwenden.
+; translation for: Removing %1...
+de.RemovingX=Entferne %1...
+; translation for: On this version of Windows, using mfilemon instead of Redmon is recommended.
+de.mfilemonRecommended=Auf dieser Windows-Version wird die Verwendung von mfilemon statt Redmon empfohlen.
+; translation for: You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
+de.mfilemonWantsAutostart=Sie haben die "mfilemon (Named Pipe)"-Faxdruckeroption ausgewählt. Bitte beachten Sie: Damit der Faxdrucker funktioniert, muss YajHFC laufen, während Sie auf den Faxdrucker drucken.
+
 
 ; Spanish translation:
 es.InstallFaxPrinter=Instalar una impresora de faxes
@@ -296,14 +320,40 @@ fr.InstallTIFFTask=Téléchargement et installation de tiff2pdf (Si pas déjà i
 fr.PreserveDLMsg=Enregistrer les fichiers téléchargés sur le bureau?
 
 ; Russian translation:
-ru.InstallFaxPrinter=Установить факс-принтер
-ru.InstallingX=Устанавливается %1...
-ru.FaxPrinter=факс-принтер
+; translation for: Support for command line only mode
+ru.ConsoleSupport=Поддержка режима командной строки
+; translation for: Core application files
 ru.CoreApplicationFiles=Базовые компоненты программы
+; translation for: Automatically start YajHFC on login
+ru.CreateAutostart=Автоматически запускать YajHFC при входе в систему
+; translation for: Documentation
 ru.Documentation=Документация
+; translation for: fax printer
+ru.FaxPrinter=факс-принтер
+; translation for: Install a fax printer
+ru.InstallFaxPrinter=Установить факс-принтер
+; translation for: Download and install GhostScript (if not already installed)
 ru.InstallGSTask=Загрузить и установить GhostScript (если еще не установлен)
+; translation for: Download and install tiff2pdf (if not already installed)
 ru.InstallTIFFTask=Загрузить и установить tiff2pdf (если еще не установлен)
+; translation for: The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
+ru.InstalledRedmonDiffers=Установленная на этом компьютере версия Redmon отличается от версии, выбранной Вами для установки. Хотите ли Вы, чтобы программа установки удалила установленную версию? (Если Вы выберете "Нет", YajHFC будет использовать установленную версию.)
+; translation for: Installing %1...
+ru.InstallingX=Устанавливается %1...
+; translation for: Advanced PDF support (iText)
+ru.PDFSupport=Расширенная поддержка PDF (iText)
+; translation for: Save downloaded files on the desktop?
 ru.PreserveDLMsg=Сохранить загруженные файлы на рабочем столе?
+; translation for: RedmonEE is only supported on 32bit versions of Windows.
+ru.RedmonEE32bitOnly=RedmonEE поддерживается только в 32bit версиях Windows.
+; translation for: On this version of Windows, using RedmonEE instead of Redmon is recommended.
+ru.RedmonEERecommended=Для этой версии Windows рекомендуется использовать RedmonEE вместо Redmon.
+; translation for: Removing %1...
+ru.RemovingX=Удаляется %1...
+; translation for: On this version of Windows, using mfilemon instead of Redmon is recommended.
+ru.mfilemonRecommended=Для этой версии Windows рекомендуется использовать mfilemon вместо Redmon.
+; translation for: You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
+ru.mfilemonWantsAutostart=Вы выбрали mfilemon (Именованную Трубу) в качестве факс-принтера. Имейте ввиду, что для работы факс-принтера необходимо, чтобы во время печати был запущле?
 
 
 ; Native names for the languages (so do not translate them either):
