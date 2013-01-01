@@ -16,6 +16,15 @@ descriptions=['Main application messages (messages.po)',
              'PDF plugin messages',
              'FOP plugin messages']
 
+GC_base='http://code.google.com/p/yajhfc/source/browse'
+GC_repos=['default',
+          'default',
+          'console',
+          'plugin-pdf',
+          'fopplugin']
+          
+
+
 sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 
 langs=[]
@@ -30,12 +39,21 @@ if (len(langs)==0):
   sys.exit(1)
 langs.sort()
 
+version="<unknown>"
+util_java=codecs.open("yajhfc/src/yajhfc/Utils.java", "rU", "utf-8")
+verpattern=re.compile('\s*public static final String AppVersion = "(.*?)";.*')
+for line in util_java:
+  vm = verpattern.match(line)
+  if (vm):
+    version=vm.group(1)
+    break
+util_java.close()
 
 msgfmtenv=os.environ.copy()
 msgfmtenv['LANG'] = 'C'
 msgfmtpattern=re.compile('(\d+) translated.*?(?:, (\d+) fuzzy.*?)?(?:, (\d+) untranslated.*?)?\.')
 
-print "<p>This page shows the status of YajHFC translations as of " + time.strftime("%Y-%m-%d") + ".</p>"
+print "<p>This page shows the status of YajHFC translations for version " + version + " as of " + time.strftime("%Y-%m-%d") + ".</p>"
 print "<p>If you are missing your language and would like to create a translation for it or if you would like to complete your language's translation, please <a href=\"/support/email-contact\">contact me</a><br />"
 print "   An overview of the translation process can be found in the <a href=\"/documentation/wiki/89-translation-guide\">Translation Guide</a>.</p>"
 
@@ -89,10 +107,14 @@ for i in range(0, len(filelist)):
 
     if (numtrans<0 or numtotal<0):
       transmsg="No translation available"
-    elif (numfuzzy>0):
-      transmsg="%d of %d messages (%d fuzzy)" % (numtrans, numtotal, numfuzzy)
     else:
-      transmsg="%d of %d messages" % (numtrans, numtotal)
+      if (numfuzzy>0):
+        transmsg="%d of %d messages (%d fuzzy)" % (numtrans, numtotal, numfuzzy)
+      else:
+        transmsg="%d of %d messages" % (numtrans, numtotal)
+      pos = filename.find('/')
+      GC_path = GC_base + filename[pos:] + '?repo=' + GC_repos[i]
+      transmsg = '<a href="' + GC_path + '">' + transmsg + '</a>'
     
     locale = babel.Locale(lang)
     print " <tr>"
