@@ -34,33 +34,23 @@ Source: ..\..\..\workspace\yajhfc-pdf-plugin\dist\examples\cover.pdf; DestDir: {
 Source: ..\..\..\workspace\yajhfc-pdf-plugin\dist\examples\cover-src.odt; DestDir: {app}\examples; Components: pdf
 Source: ..\..\..\workspace\yajhfc-pdf-plugin\dist\doc\Creating_PDF_coverpages.pdf; DestDir: {app}; Components: pdf
 
-
-; Redmon: Common files (docs):
+; Redmon:
+Source: redmon\enum.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\FILE_ID.DIZ; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
 Source: redmon\LICENCE; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
 Source: redmon\README.TXT; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
-Source: redmon\redmon.hlp; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
-; Redmon: 32bit files
-Source: redmon\enum.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\FILE_ID.DIZ; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\redfile.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\redmon35.dll; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\redmon95.dll; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\redmonnt.dll; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\redpr.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\redrun.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\setup.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\src.zip; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-Source: redmon\unredmon.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: not IsWin64
-; Redmon: 64bit files
-Source: redmon64\enum.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\FILE_ID.DIZ; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\redfile.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\redmonnt.dll; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\redpr.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\redrun.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\setup.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\src64.zip; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
-Source: redmon64\unredmon.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon; Check: IsWin64
+Source: redmon\redfile.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\redmon32.dll; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\redmon64.dll; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\redmon.chm; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\redpr.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\redrun.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\setup64.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\setup.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\src.zip; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\unredmon64.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+Source: redmon\unredmon.exe; DestDir: {app}\redmon; Components: FaxPrinter/Redmon
+
 ; RedmonEE: 32bit files
 Source: RedMonEE\Doc2Html.exe; DestDir: {app}\redmonee; Components: FaxPrinter/Redmonee
 Source: RedMonEE\Enum.exe; DestDir: {app}\redmonee; Components: FaxPrinter/Redmonee
@@ -178,15 +168,23 @@ Name: tiff2pdf; Description: {cm:InstallTIFFTask}; Flags: unchecked; Components:
 [Run]
 Filename: rundll32; StatusMsg: {cm:RemovingX,{cm:faxprinter}}; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; Parameters: "printui.dll,PrintUIEntry /dl /n ""{cm:printername}"""; Check: RemoveOldPrinter; AfterInstall: RemoveYajHFCPort; MinVersion: 0,5.0
 Filename: cmd; Parameters: "/c echo Restarting spooler service, please wait... && net stop spooler && net start spooler"; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; Check: RemoveOldPrinter;
-Filename: unredmon.exe; WorkingDir: {sys}; StatusMsg: {cm:RemovingX,RedMon}; Components: FaxPrinter/Redmon FaxPrinter/RedmonEE; Check: RemoveOldPrinter; Parameters: /Q
+Filename: {reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Redirection Port Monitor,UninstallString|unredmon.exe}; WorkingDir: {sys}; StatusMsg: {cm:RemovingX,RedMon}; Components: FaxPrinter/Redmon FaxPrinter/RedmonEE; Check: RemoveOldPrinter; Parameters: /Q
 
 Filename: {app}\redmon\setup.exe; WorkingDir: {app}\redmon; StatusMsg: {cm:InstallingX,RedMon}; Components: FaxPrinter/Redmon; Check: RedmonNotInstalled; Parameters: /Q
 Filename: {app}\redmonee\setup.exe; WorkingDir: {app}\redmonee; StatusMsg: {cm:InstallingX,RedMonEE}; Components: FaxPrinter/RedmonEE; Check: RedmonNotInstalled; Parameters: /Q
 Filename: {code:mfilemonSetupPath}; WorkingDir: {tmp}; StatusMsg: {cm:InstallingX,mfilemon}; Components: FaxPrinter/mfilemon; Check: mfilemonNotInstalled; Parameters: /SILENT
 Filename: cmd; Parameters: "/c echo Restarting spooler service, please wait... && net stop spooler && net start spooler"; StatusMsg: {cm:InstallingPrinterPort}; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; BeforeInstall: InstallYajHFCPort();
+; Windows 2000+XP
 Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Apple LaserWriter 16/600 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,5.0; OnlyBelowVersion: 0,6.0
-Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""FX DP 305-AP PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,6.0; OnlyBelowVersion: 0,6.01
-Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Xerox Phaser 6120 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,6.01
+; Windows Vista/7/8
+Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""MS Publisher Color Printer"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,6.0; 
+
+; Windows Vista (alt)
+;Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""FX DP 305-AP PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,6.0; OnlyBelowVersion: 0,6.01
+; Windows 7 (alt)
+;Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Xerox Phaser 6120 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,6.01; OnlyBelowVersion: 0,6.02
+; Windows 8 (alt)
+;Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""MS Publisher Color Printer"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,6.02; 
 
 ;Filename: {app}\w98info.txt; Flags: shellexec; OnlyBelowVersion: 0,5.0; Components: faxprinter/redmon faxprinter/redmonee
 ;Filename: {code:GSSetupPath}; Check: InstallGS; StatusMsg: {cm:InstallingX,GhostScript}; Parameters: -auto
@@ -199,7 +197,7 @@ Filename: rundll32; Components: faxprinter/redmon faxprinter/redmonee faxprinter
 Filename: reg; Components: faxprinter/redmon faxprinter/redmonee; Parameters: "delete ""HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\{cm:redmonname}\Ports\YAJHFC:"" /f"; RunOnceId: DeletePort; MinVersion: 0,5.0
 Filename: reg; Components: faxprinter/mfilemon; Parameters: "delete ""HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\Multi File Port Monitor\YAJHFC:"" /f"; RunOnceId: DeletePort; MinVersion: 0,5.0
 Filename: cmd; Parameters: "/c echo Restarting spooler service, please wait... && net stop spooler && net start spooler"; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; RunOnceId: RestartSpooler;
-Filename: unredmon.exe; WorkingDir: {sys}; Components: FaxPrinter/Redmon FaxPrinter/RedmonEE; RunOnceId: RemoveRedmon;
+Filename: {reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Redirection Port Monitor,UninstallString|unredmon.exe}; WorkingDir: {sys}; Components: FaxPrinter/Redmon FaxPrinter/RedmonEE; RunOnceId: RemoveRedmon;
 [UninstallDelete]
 Type: files; Name: {group}\Homepage.url
 Type: files; Name: {app}\settings.d\path-settings.default
@@ -600,7 +598,9 @@ begin
   else
   begin
     //TODO: Find a better algorithm here...
-    if FileExists(ExpandConstant('{sys}\redmon.hlp')) then
+    if FileExists(ExpandConstant('{sys}\redmon.hlp')) 
+    or FileExists(ExpandConstant('{sys}\redmon32.dll')) 
+    or FileExists(ExpandConstant('{sys}\redmon64.dll')) then
       result := 1
     else if FileExists(ExpandConstant('{sys}\redmon.chm')) then
       result := 2

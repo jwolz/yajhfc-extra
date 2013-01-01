@@ -12,5 +12,6 @@ python $POSTAT_PY > $OUTFILE
 
 echo "Wrote output to $OUTFILE"
 
+gedit $OUTFILE &
 
 
