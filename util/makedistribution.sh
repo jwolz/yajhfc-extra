@@ -11,7 +11,7 @@ TARGETS=""
 
 for OPT in $* ; do
   case $OPT in
-    -all|-jar|-deb|-rpm|-mac|-win)
+    -all|-jar|-deb|-rpm|-mac|-win|-man)
       TARGETS="$TARGETS ${OPT#-}"
     ;;
     -*)
@@ -62,6 +62,9 @@ if [ $1 == all -o $1 == jar ]; then
  echo "Building yajhfc-pdf-plugin..."
  cd $WORKSPACE/yajhfc-pdf-plugin
  $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
+ echo "Building yajhfc-plugin-mail..."
+ cd $WORKSPACE/yajhfc-plugin-mail
+ $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
 
  echo "Copying files to output..."
  cp $WORKSPACE/yajhfc/build/yajhfc.jar $OUTPUT/yajhfc-$YAJVER.jar
@@ -72,6 +75,9 @@ if [ $1 == all -o $1 == jar ]; then
  cp $WORKSPACE/yajhfc-console/build/yajhfc-console-src.zip $OUTPUT/yajhfc-console-$YAJVER-src.zip
  cp $WORKSPACE/yajhfc-pdf-plugin/build/yajhfc-pdf-plugin-src.zip $OUTPUT/yajhfc-pdf-plugin-$YAJVER-src.zip
  cp $WORKSPACE/yajhfc-pdf-plugin/build/yajhfc-pdf-plugin.zip $OUTPUT/yajhfc-pdf-plugin-$YAJVER.zip
+ cp $WORKSPACE/yajhfc-plugin-mail/build/yajhfc-plugin-mail-src.zip $OUTPUT/yajhfc-plugin-mail-$YAJVER-src.zip
+ cp $WORKSPACE/yajhfc-plugin-mail/build/yajhfc-plugin-mail.zip $OUTPUT/yajhfc-plugin-mail-$YAJVER.zip
+
 
  cat <<EOF > $OUTPUT/versioninfo.xml
 <?xml version="1.0"?>
@@ -99,10 +105,13 @@ if [ $1 == all -o $1 == win ]; then
  echo "Building YajHFC with FOPPlugin setup..."
  #eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT /dWITHFOP $ISSFILE
  eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT /dWITHFOP $FOPISSFILE
+ echo "Building YajHFC batch printer setup..."
+ eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT setup-batchprinter.iss
 
  echo "Copying files to output..."
  cp $EXTRADIR/winsetup/Output/setup.exe $OUTPUT/yajhfc-$YAJVER-setup.exe
  cp $EXTRADIR/winsetup/Output/Setup-FOPPlugin.exe $OUTPUT/yajhfc-$YAJVER-FOPPlugin-$FOPVER-setup.exe
+ cp $EXTRADIR/winsetup/Output/Setup-BatchPrinter.exe $OUTPUT/yajhfc-$YAJVER-plugin-mail-setup.exe
 fi
 
 if [ $1 == all -o $1 == deb ]; then 
@@ -122,6 +131,12 @@ if [ $1 == all -o $1 == rpm ]; then
  cd $EXTRADIR/linux-pkg/rpm
  ./makepackage.sh $YAJVERDOT
  ./invoke-chroot.sh "$OUTPUT"
+fi
+
+if [ $1 == all -o $1 == man ]; then 
+  echo "Creating HTML man pages..."
+  LANG=C java -cp $WORKSPACE/yajhfc/build/yajhfc.jar yajhfc.Launcher --Xprint-manpage | groff -mandoc -Thtml > $OUTPUT/man-yajhfc.html
+  LANG=C java -cp $WORKSPACE/yajhfc/build/yajhfc.jar:$WORKSPACE/yajhfc-console/build/yajhfc-console.jar yajhfc.console.Main --Xprint-manpage | groff -mandoc -Thtml > $OUTPUT/man-cyajhfc.html
 fi
 
 }
