@@ -8,8 +8,8 @@ Homepage: http://www.yajhfc.de/
 
 Package: yajhfc
 Architecture: all
-Depends: sun-java6-jre | java5-runtime
-Recommends: sun-java6-jre
+Depends: openjdk-7-jre | openjdk-6-jre | sun-java6-jre | java5-runtime
+Recommends: openjdk-7-jre | openjdk-6-jre | sun-java6-jre
 Suggests: ghostscript, libtiff-tools, pdf-viewer, postscript-viewer
 Description: Yet Another Java HylaFAX client
  YajHFC is a client program for the HylaFAX fax server, implemented in Java.

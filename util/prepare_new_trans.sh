@@ -21,6 +21,13 @@ OUTDIR=/tmp/yajhfc-$OUTLANG
   
   cp yajhfc/src/yajhfc/i18n/messages.po $OUTDIR/messages_$OUTLANG.po
   cp FOPPlugin/i18n/FOPMessages.po      $OUTDIR/FOPMessages_$OUTLANG.po
+  
+  mkdir $OUTDIR/pdf-plugin
+  cp yajhfc-pdf-plugin/i18n/Messages.po $OUTDIR/pdf-plugin/Messages_$OUTLANG.po
+  
+  mkdir $OUTDIR/console
+  cp yajhfc-console/i18n/Messages.po    $OUTDIR/console/Messages_$OUTLANG.po
+  
 
   cd yajhfc/src/yajhfc/i18n
   perl maketemplate.pl < CommandLineOpts.po > $OUTDIR/CommandLineOpts_$OUTLANG.po
