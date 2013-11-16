@@ -26,6 +26,9 @@ makepack() {
 
   PDFMSG=yajhfc-pdf-plugin/i18n/Messages.po
   LOCPDFMSG=yajhfc-pdf-plugin/i18n/Messages_$1.po
+  
+  BATCHPRINTMSG=yajhfc-plugin-mail/i18n/Messages.po
+  LOCBATCHPRINTMSG=yajhfc-plugin-mail/i18n/Messages_$1.po
 
   CMDLINEOPTS=yajhfc/src/yajhfc/i18n/CommandLineOpts.po
   LOCCMDLINEOPTS=yajhfc/src/yajhfc/i18n/CommandLineOpts_$1.po
@@ -72,6 +75,17 @@ makepack() {
      popd > /dev/null
   fi
   
+  if [ "$INCLBATCHPRINTMSG" = "y" -a -f $LOCBATCHPRINTMSG ]; then
+     if [ ! -d $OUTDIR/batch-printer-plugin ]; then
+       mkdir $OUTDIR/batch-printer-plugin
+     fi
+     
+     cp $LOCBATCHPRINTMSG $OUTDIR/batch-printer-plugin
+     pushd $OUTDIR > /dev/null
+     zip $OUT batch-printer-plugin/`basename $LOCBATCHPRINTMSG` 
+     popd > /dev/null
+  fi
+  
   if [ "$INCLISSMSG" = "y" -a -f $OUTDIR/win-setup/setup_$1.txt ]; then
      pushd $OUTDIR > /dev/null
      zip $OUT win-setup/setup_$1.txt
@@ -87,6 +101,7 @@ read -p 'Include README? [y/n]' INCLREADME
 read -p 'Include FOP Msg? [y/n]' INCLFOPMSG
 read -p 'Include Console Msg? [y/n]' INCLCONSMSG
 read -p 'Include PDF Msg? [y/n]' INCLPDFMSG
+read -p 'Include Batch Printer Msg? [y/n]' INCLBATCHPRINTMSG
 read -p 'Include Windows Setup Msgs? [y/n]' INCLISSMSG
 read -p 'Upload stuff? [y/n]' UPLOADSTUFF
 

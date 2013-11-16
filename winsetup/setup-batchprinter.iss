@@ -2,7 +2,7 @@
  #define public VERSION "0.5.1"
 #endif
 
-#define JAVAMAILDIR "..\..\..\..\build\javamail-1.4.7"
+#define JAVAMAILDIR "..\..\..\..\java\lib\javamail"
 
 [Files]
 Source: ..\..\..\workspace\yajhfc-plugin-mail\build\yajhfc-plugin-mail.jar; DestDir: {app}; Components: base
