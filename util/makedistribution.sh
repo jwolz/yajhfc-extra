@@ -32,12 +32,12 @@ fi
 build() {
 ANT=ant
 ISCC="wine \"C:\Program Files\Inno Setup 5\ISCC\""
-ISSFILE=setup4.iss
+ISSFILE=setup5.iss
 FOPISSFILE=setup-fop.iss
 WINDOWSIFY="java -cp $WORKSPACE/jtools/bin windowsify.Windowsify"
 
 read YAJVER YAJVERDOT FOPVER FOPVERDOT  <<EOF
-$(perl -lne 'if ($_ =~/public static final String AppVersion = "(.*?)";/) { $Ver=$1; $Ver=~tr/./_/; printf("%s %s ", $Ver, $1);}' $WORKSPACE/yajhfc/src/yajhfc/Utils.java $WORKSPACE/FOPPlugin/src/yajhfc/faxcover/fop/EntryPoint.java )
+$(perl -lne 'if ($_ =~/public static final String AppVersion = "(.*?)";/) { $Ver=$1; $Ver=~tr/./_/; printf("%s %s ", $Ver, $1);}' $WORKSPACE/yajhfc/src/yajhfc/VersionInfo.java $WORKSPACE/FOPPlugin/src/yajhfc/faxcover/fop/EntryPoint.java )
 
 EOF
 
@@ -66,6 +66,9 @@ if [ $1 == all -o $1 == jar ]; then
  echo "Building yajhfc-plugin-mail..."
  cd $WORKSPACE/yajhfc-plugin-mail
  $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
+ echo "Building yajhfc-plugin-libtiff..."
+ cd $WORKSPACE/yajhfc-plugin-libtiff
+ $ANT -Dyajhfc.version=$YAJVERDOT clean fulldist
 
  echo "Copying files to output..."
  cp $WORKSPACE/yajhfc/build/yajhfc.jar $OUTPUT/yajhfc-$YAJVER.jar
@@ -78,6 +81,8 @@ if [ $1 == all -o $1 == jar ]; then
  cp $WORKSPACE/yajhfc-pdf-plugin/build/yajhfc-pdf-plugin.zip $OUTPUT/yajhfc-pdf-plugin-$YAJVER.zip
  cp $WORKSPACE/yajhfc-plugin-mail/build/yajhfc-plugin-mail-src.zip $OUTPUT/yajhfc-plugin-mail-$YAJVER-src.zip
  cp $WORKSPACE/yajhfc-plugin-mail/build/yajhfc-plugin-mail.zip $OUTPUT/yajhfc-plugin-mail-$YAJVER.zip
+ cp $WORKSPACE/yajhfc-plugin-libtiff/build/yajhfc-plugin-libtiff-src.zip $OUTPUT/yajhfc-plugin-libtiff-$YAJVER-src.zip
+ cp $WORKSPACE/yajhfc-plugin-libtiff/build/yajhfc-plugin-libtiff.zip $OUTPUT/yajhfc-plugin-libtiff-$YAJVER.zip
 
 
  cat <<EOF > $OUTPUT/versioninfo.xml

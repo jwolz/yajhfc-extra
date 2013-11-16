@@ -39,7 +39,7 @@ Source: ..\..\..\..\java\jna\jna.jar; DestDir: {app}\lib; DestName: jna.jar; Com
 Source: {code:PlatformJarPath}; DestDir: {app}\lib; DestName: platform.jar; Flags: external; ExternalSize: 913435; Components: faxprinter/mfilemon
 
 ; Native libtiff
-Source: ..\..\..\workspace\yajhfc-plugin-libtiff\build\yajhfc-libtiff-plugin.jar; DestDir: {app}; Components: libtiff
+Source: ..\..\..\workspace\yajhfc-plugin-libtiff\build\yajhfc-plugin-libtiff.jar; DestDir: {app}; Components: libtiff
 Source: ..\..\..\workspace\yajhfc-plugin-libtiff\dist\tiff-win32\libtiff.dll; DestDir: {app}\tiff-win32; Components: libtiff
 Source: ..\..\..\workspace\yajhfc-plugin-libtiff\dist\tiff-win32\libtiff64.dll; DestDir: {app}\tiff-win32; Components: libtiff
 Source: ..\..\..\workspace\yajhfc-plugin-libtiff\dist\tiff-win32\tiff2pdf.exe; DestDir: {app}\tiff-win32; Components: libtiff
@@ -155,7 +155,7 @@ Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Print\Monitors\{cm:redmonna
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Print\Monitors\Multi File Port Monitor\Ports\YAJHFC:; Flags: uninsdeletekey dontcreatekey; Components: faxprinter/mfilemon
 
 Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: addLaunchArg.PDFplugin; ValueData: "--loadplugin=""{app}\yajhfc-pdf-plugin.jar"""; Flags: uninsdeletekeyifempty uninsdeletevalue; Components: pdf
-Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: addLaunchArg.libtiffplugin; ValueData: "--loadplugin=""{app}\yajhfc-libtiff-plugin.jar"""; Flags: uninsdeletekeyifempty uninsdeletevalue; Components: pdf
+Root: HKLM; Subkey: Software\YajHFC; ValueType: string; ValueName: addLaunchArg.libtiffplugin; ValueData: "--loadplugin=""{app}\yajhfc-plugin-libtiff.jar"""; Flags: uninsdeletekeyifempty uninsdeletevalue; Components: pdf
 
 [INI]
 Filename: {group}\Homepage.url; Section: InternetShortcut; Key: URL; String: http://www.yajhfc.de/
