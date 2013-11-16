@@ -4,7 +4,7 @@
 #ifndef FOPVersion
   #define public FOPVersion "0.1.7"
 #endif
-#define FOPDIR "..\..\..\..\build\fop-1.0"
+#define FOPDIR "..\..\..\..\java\lib\fop-1.1"
 
 [Files]
 Source: ..\..\..\workspace\FOPPlugin\build\FOPPlugin.jar; DestDir: {app}; Components: base

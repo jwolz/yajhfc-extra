@@ -1,8 +1,8 @@
-yajhfc (0.5.4~beta5-1) unstable; urgency=low
+yajhfc (0.1.11-1) unstable; urgency=low
 
-  * Package build for YajHFC 0.5.4beta5
+  * Package build for YajHFC 0.1.11
 
- -- Jonas Wolz <jonas.wolz@freenet.de>  Sun, 24 Mar 2013 13:37:37 +0100
+ -- Jonas Wolz <jonas.wolz@freenet.de>  Sun, 03 Nov 2013 12:33:01 +0100
 
 yajhfc (0.4.3~beta1-1) unstable; urgency=low
 

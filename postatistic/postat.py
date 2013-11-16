@@ -8,20 +8,23 @@ filelist=['yajhfc/src/yajhfc/i18n/messages',
           'yajhfc/src/yajhfc/i18n/CommandLineOpts',
           'yajhfc-console/i18n/Messages',
           'yajhfc-pdf-plugin/i18n/Messages',
-          'FOPPlugin/i18n/FOPMessages']
+          'FOPPlugin/i18n/FOPMessages',
+          'yajhfc-plugin-mail/i18n/Messages']
           
 descriptions=['Main application messages (messages.po)',
              'Main application command line option description (CommandLineOpts.po)',
              'Console add-on messages',
              'PDF plugin messages',
-             'FOP plugin messages']
+             'FOP plugin messages',
+             'Batch printer and mailer plugin messages']
 
 GC_base='http://code.google.com/p/yajhfc/source/browse'
 GC_repos=['default',
           'default',
           'console',
           'plugin-pdf',
-          'fopplugin']
+          'fopplugin',
+          'plugin-mailer']
           
 
 

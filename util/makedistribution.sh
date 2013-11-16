@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Usage: makedistribution [-all|-jar|-deb|-rpm|-mac|-win] [outputdir]
 
 set -e
@@ -34,6 +34,7 @@ ANT=ant
 ISCC="wine \"C:\Program Files\Inno Setup 5\ISCC\""
 ISSFILE=setup4.iss
 FOPISSFILE=setup-fop.iss
+WINDOWSIFY="java -cp $WORKSPACE/jtools/bin windowsify.Windowsify"
 
 read YAJVER YAJVERDOT FOPVER FOPVERDOT  <<EOF
 $(perl -lne 'if ($_ =~/public static final String AppVersion = "(.*?)";/) { $Ver=$1; $Ver=~tr/./_/; printf("%s %s ", $Ver, $1);}' $WORKSPACE/yajhfc/src/yajhfc/Utils.java $WORKSPACE/FOPPlugin/src/yajhfc/faxcover/fop/EntryPoint.java )
@@ -98,7 +99,7 @@ if [ $1 == all -o $1 == win ]; then
  for R in $WORKSPACE/yajhfc/README*.txt; do
    READMES="$READMES $R temp/`basename $R`"
  done
- windowsify -i utf-8 -o utf-8 $READMES 
+ $WINDOWSIFY -i utf-8 -o utf-8 $READMES 
 
  echo "Building YajHFC setup..."
  eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT $ISSFILE

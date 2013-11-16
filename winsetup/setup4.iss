@@ -5,8 +5,8 @@
 #define APPNAME "YajHFC"
 #define APPVERNAME APPNAME + " " + VERSION
 
-#define ITEXT_DIR "..\..\..\..\build\itext"
-#define ITEXT_JAR "itextpdf-5.2.1.jar"
+#define ITEXT_DIR "..\..\..\..\java\lib\itext"
+#define ITEXT_JAR "itextpdf-5.4.1.jar"
 
 [Files]
 Source: ..\..\..\workspace\yajhfc\build\yajhfc.jar; DestDir: {app}; Components: base
