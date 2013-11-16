@@ -1,3 +1,3 @@
-YAJHFCARGS="$YAJHFCARGS --loadplugin=/usr/share/yajhfc/yajhfc-pdf-plugin.jar"
-CLASSPATH="$CLASSPATH:/usr/share/java/itext5.jar"
+YAJHFCARGS="$YAJHFCARGS --loadplugin=/usr/share/yajhfc/yajhfc-pdf-plugin.jar --loadplugin=/usr/share/yajhfc/yajhfc-plugin-libtiff.jar"
+CLASSPATH="$CLASSPATH:/usr/share/java/itext5.jar:/usr/share/java/jna.jar"
 

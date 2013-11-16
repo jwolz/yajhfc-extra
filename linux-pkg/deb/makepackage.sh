@@ -57,6 +57,8 @@ cp build/yajhfc-pdf-plugin.jar $TARGETDIR/pdfplugin
 mkdir $TARGETDIR/pdfplugin/examples $TARGETDIR/pdfplugin/doc
 cp dist/examples/* $TARGETDIR/pdfplugin/examples
 cp dist/doc/* $TARGETDIR/pdfplugin/doc
+cd ../yajhfc-plugin-libtiff
+cp build/yajhfc-plugin-libtiff.jar $TARGETDIR/pdfplugin
 popd
 
 if grep -c "yajhfc ($PACKAGEVERSION) unstable" template/debian/changelog > /dev/null; then

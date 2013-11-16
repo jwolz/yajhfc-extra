@@ -1,5 +1,6 @@
 #!/bin/sh
 # "Installs" YajHFC-console in order to create a package
+set -e
 
 if [ -z "$1" ]; then
   echo "Usage: `basename $0` targetdir"

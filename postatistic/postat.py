@@ -43,7 +43,7 @@ if (len(langs)==0):
 langs.sort()
 
 version="<unknown>"
-util_java=codecs.open("yajhfc/src/yajhfc/Utils.java", "rU", "utf-8")
+util_java=codecs.open("yajhfc/src/yajhfc/VersionInfo.java", "rU", "utf-8")
 verpattern=re.compile('\s*public static final String AppVersion = "(.*?)";.*')
 for line in util_java:
   vm = verpattern.match(line)

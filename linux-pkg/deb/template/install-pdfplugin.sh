@@ -1,5 +1,6 @@
 #!/bin/sh
 # "Installs" YajHFC in order to create a package
+set -e
 
 if [ -z "$1" ]; then
   echo "Usage: `basename $0` targetdir"
@@ -12,6 +13,7 @@ cd pdfplugin
 
 mkdir -p $PREFIX/usr/share/yajhfc
 install -m 0644 yajhfc-pdf-plugin.jar $PREFIX/usr/share/yajhfc
+install -m 0644 yajhfc-plugin-libtiff.jar $PREFIX/usr/share/yajhfc
 
 mkdir -p $PREFIX/usr/share/doc/yajhfc-pdfplugin
 #install -m 0644 readme.pdf $PREFIX/share/doc/yajhfc-pdfplugin

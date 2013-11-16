@@ -58,7 +58,7 @@ Description: Command line only mode for YajHFC
 
 Package: yajhfc-pdfplugin
 Architecture: all
-Depends: yajhfc, libitext5-java
+Depends: yajhfc, libitext5-java, libjna-java, libtiff5
 Description: PDF plugin for YajHFC
  This plugin uses iText to add advanced PDF support in YajHFC:
    * PDF cover pages
