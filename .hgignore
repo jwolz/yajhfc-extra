@@ -7,3 +7,7 @@ winsetup/redmon17.zip
 winsetup/redmon64/*
 winsetup/temp/*
 
+syntax: glob
+*~
+linux-pkg/printerport-cups.tar.gz
+*.old

@@ -285,7 +285,7 @@ de.RemovingX=Entferne %1...
 de.mfilemonRecommended=Auf dieser Windows-Version wird die Verwendung von mfilemon statt Redmon empfohlen.
 ; translation for: You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
 de.mfilemonWantsAutostart=Sie haben die "mfilemon (Named Pipe)"-Faxdruckeroption ausgewählt. Bitte beachten Sie: Damit der Faxdrucker funktioniert, muss YajHFC laufen, während Sie auf den Faxdrucker drucken.
-
+de.libtiff=Unterstützung für native libtiff
 
 ; Spanish translation:
 es.InstallFaxPrinter=Instalar una impresora de faxes
@@ -308,14 +308,44 @@ pl.InstallTIFFTask=Pobierz i zainstaluj tiff2pdf (jeżeli nie zainstalowany)
 pl.PreserveDLMsg=Zapisać pobrane pliki na pulpicie?
 
 ; Italian translation:
-it.InstallFaxPrinter=Installa una stampante fax
-it.InstallingX=Installazione %1...
-it.FaxPrinter=stampante fax
+; translation for: Support for command line only mode
+it.ConsoleSupport=Supporto per l'utilizzo esclusivo da linea di comando
+; translation for: Core application files
 it.CoreApplicationFiles=File applicativi di base
+; translation for: Automatically start YajHFC on login
+it.CreateAutostart=Avvia YajHFC automaticamente al login
+; translation for: Documentation
 it.Documentation=Documentazione
+; translation for: fax printer
+it.FaxPrinter=stampante fax
+; translation for: Install a fax printer
+it.InstallFaxPrinter=Installa una stampante fax
+; translation for: Download and install GhostScript (if not already installed)
 it.InstallGSTask=Scarica e installa GhostScript (se non già installato)
+; translation for: Download and install tiff2pdf (if not already installed)
 it.InstallTIFFTask=Scarica e installa tiff2pdf (se non già installato)
-it.PreserveDLMsg=Salvo i file scaricati sul Desktop?
+; translation for: The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
+it.InstalledRedmonDiffers=La versione di Redmon attualmente installata su questo computer differisce dalla versione selezionata per l'installazione. Si vuole disinstallare automaticamente la versione attualmente installata? (Se si seleziona "No" YajHFC continuerà ad usare la versione attualmente installata.)
+; translation for: Installing YAJHFC: port...
+it.InstallingPrinterPort=Installazione YajHFC: porta...
+; translation for: Installing %1...
+it.InstallingX=Installazione %1...
+; translation for: Advanced PDF support (iText)
+it.PDFSupport=Supporto PDF avanzato (iText)
+; translation for: Save downloaded files on the desktop?
+it.PreserveDLMsg=Salvare sul Desktop i file scaricati?
+; translation for: RedmonEE is only supported on 32bit versions of Windows.
+it.RedmonEE32bitOnly=RedMonEE è supportato solo su versioni Windows a 32 bit.
+; translation for: On this version of Windows, using RedmonEE instead of Redmon is recommended.
+it.RedmonEERecommended=Su questa versione di Windows è consigliato l'uso di RedmonEE al posto di Redmon.
+; translation for: Removing %1...
+it.RemovingX=Rimozione %1...
+; translation for: Native libtiff support
+it.libtiff=Supporto nativo libtiff
+; translation for: On this version of Windows, using mfilemon instead of Redmon is recommended.
+it.mfilemonRecommended=Su questa versione di Windows è consigliato l'uso di mfilemon al posto di Redmon.
+; translation for: You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
+it.mfilemonWantsAutostart=E' stata selezionata l'opzione mfilemon (Named Pipe) per la stampante fax. Tenere presente che per il funzionamento della stampante fax è necessario che YajHFC sia in funzione quando si stampa su essa.
 
 ; French translation:
 fr.InstallFaxPrinter=Installer une imprimante Fax
@@ -346,12 +376,12 @@ ru.InstallGSTask=Загрузить и установить GhostScript (есл�
 ru.InstallTIFFTask=Загрузить и установить tiff2pdf (если еще не установлен)
 ; translation for: The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
 ru.InstalledRedmonDiffers=Установленная на этом компьютере версия Redmon отличается от версии, выбранной Вами для установки. Хотите ли Вы, чтобы программа установки удалила установленную версию? (Если Вы выберете "Нет", YajHFC будет использовать установленную версию.)
+; translation for: Installing YAJHFC: port...
+ru.InstallingPrinterPort=Устанавливается YAJHFC: порт...
 ; translation for: Installing %1...
 ru.InstallingX=Устанавливается %1...
 ; translation for: Advanced PDF support (iText)
 ru.PDFSupport=Расширенная поддержка PDF (iText)
-
-
 ; translation for: Save downloaded files on the desktop?
 ru.PreserveDLMsg=Сохранить загруженные файлы на рабочем столе?
 ; translation for: RedmonEE is only supported on 32bit versions of Windows.
@@ -360,10 +390,13 @@ ru.RedmonEE32bitOnly=RedmonEE поддерживается только в 32bit
 ru.RedmonEERecommended=Для этой версии Windows рекомендуется использовать RedmonEE вместо Redmon.
 ; translation for: Removing %1...
 ru.RemovingX=Удаляется %1...
+; translation for: Native libtiff support
+ru.libtiff=Встроенная поддержка libtiff
 ; translation for: On this version of Windows, using mfilemon instead of Redmon is recommended.
 ru.mfilemonRecommended=Для этой версии Windows рекомендуется использовать mfilemon вместо Redmon.
 ; translation for: You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
 ru.mfilemonWantsAutostart=Вы выбрали mfilemon (Именованную Трубу) в качестве факс-принтера. Имейте ввиду, что для работы факс-принтера необходимо, чтобы во время печати был запущле?
+
 
 
 ; Native names for the languages (so do not translate them either):

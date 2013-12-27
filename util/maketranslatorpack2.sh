@@ -3,7 +3,7 @@
 set -e
 
 WORKSPACE=$HOME/java/workspace
-SETUP_ISS=`dirname $0`/../winsetup/setup4.iss
+SETUP_ISS=`dirname $0`/../winsetup/setup5.iss
 
 makepack() {
   OUT=$OUTDIR/yajhfc_$1.zip
@@ -129,7 +129,7 @@ if [ "$UPLOADSTUFF" = "y" ]; then
 
 	echo "Uploading..."
 	UPLOADPATH=/html/yajhfc/files/temp/translations
-	lftp -c "open ftp://web406@srv7.sysproserver.de/$UPLOADPATH ; mput yajhfc_*.zip"
+	lftp -c "set ssl:verify-certificate false; open ftp://web406@srv7.sysproserver.de/$UPLOADPATH ; mput yajhfc_*.zip"
 	#scp yajhfc_*.zip jwolz@shell.berlios.de:/home/groups/ftp$UPLOADPATH/
 	
 	echo "Uploaded the following files:"
