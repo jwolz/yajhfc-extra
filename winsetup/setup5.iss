@@ -96,6 +96,7 @@ Source: temp\README_es.txt; DestDir: {app}; Components: docs
 Source: temp\README_fr.txt; DestDir: {app}; Components: docs
 Source: temp\README_ru.txt; DestDir: {app}; Components: docs
 Source: temp\README_tr.txt; DestDir: {app}; Components: docs
+Source: temp\README_it.txt; DestDir: {app}; Components: docs
 ;Source: w98info.txt; DestDir: {app}; OnlyBelowVersion: 0,5.0; Components: faxprinter/redmon faxprinter/redmonee; Tasks:
 Source: ..\cover\Coverpage example.html; DestDir: {app}\examples; Components: docs
 Source: ..\cover\SomeLogo.png; DestDir: {app}\examples; Components: docs
@@ -288,14 +289,44 @@ de.mfilemonWantsAutostart=Sie haben die "mfilemon (Named Pipe)"-Faxdruckeroption
 de.libtiff=Unterstützung für native libtiff
 
 ; Spanish translation:
-es.InstallFaxPrinter=Instalar una impresora de faxes
-es.InstallingX=Instalando %1...
-es.FaxPrinter=impresora de faxes
+; translation for: Support for command line only mode
+es.ConsoleSupport=Soporte para el modo de sólo línea de comandos
+; translation for: Core application files
 es.CoreApplicationFiles=Archivos principales de la aplicación
+; translation for: Automatically start YajHFC on login
+es.CreateAutostart=Iniciar automáticamente YajHFC al inicio de sesión
+; translation for: Documentation
 es.Documentation=Documentación
+; translation for: fax printer
+es.FaxPrinter=impresora de faxes
+; translation for: Install a fax printer
+es.InstallFaxPrinter=Instalar una impresora de faxes
+; translation for: Download and install GhostScript (if not already installed)
 es.InstallGSTask=Descargar e instalar GhostScript (si no se encuentra instalado)
+; translation for: Download and install tiff2pdf (if not already installed)
 es.InstallTIFFTask=Descargar e instalar tiff2pdf (si no se encuentra instalado)
+; translation for: The Redmon version already installed on this computer differs from the version you have selected for installation. Do you want setup to uninstall the already installed version? (If you select "No" YajHFC will continue to use the installed version.)
+es.InstalledRedmonDiffers=La versión de Redmon que se encuentra instalada en el sistema no coincide con la versión que ha seleccionado para instalar. ¿Desea que el asistente elimine la versión que se encuentra instalada? (si selecciona "No" YajHFC seguirá utilizando la versión instalada.)
+; translation for: Installing YAJHFC: port...
+es.InstallingPrinterPort=Instalando YajHFC: puerto...
+; translation for: Installing %1...
+es.InstallingX=Instalando %1...
+; translation for: Advanced PDF support (iText)
+es.PDFSupport=Soporte avanzado de PDF (iText)
+; translation for: Save downloaded files on the desktop?
 es.PreserveDLMsg=¿Guardar los archivos descargados en el escritorio?
+; translation for: RedmonEE is only supported on 32bit versions of Windows.
+es.RedmonEE32bitOnly=RedmonEE sólo está disponible para versiones Windows de 32 bits.
+; translation for: On this version of Windows, using RedmonEE instead of Redmon is recommended.
+es.RedmonEERecommended=En esta versión de Windows se recomienda que utilice RedmonEE en lugar de Redmon.
+; translation for: Removing %1...
+es.RemovingX=Eliminando %1...
+; translation for: Native libtiff support
+es.libtiff=Soporte nativo de libtiff
+; translation for: On this version of Windows, using mfilemon instead of Redmon is recommended.
+es.mfilemonRecommended=En esta versión de Windows se recomienda que utilice mfilemon en lugar de Redmon.
+; translation for: You have selected the mfilemon (Named Pipe) fax printer option. Please note that for the fax printer to work YajHFC must be running when you print to it.
+es.mfilemonWantsAutostart=Ha seleccionado la opción de impresora de faxes mfilemon (tubería con nombre). Tenga en cuenta que para que funcione la impresora de faxes YajHFC debe estar ejecutándose cuando imprima.
 
 ; Polish translation
 pl.InstallFaxPrinter=Zainstaluj drukarkę faksów
@@ -412,7 +443,7 @@ Name: en; MessagesFile: compiler:Default.isl
 Name: de; MessagesFile: compiler:Languages\German.isl; InfoBeforeFile: temp\README_de.txt
 Name: fr; MessagesFile: compiler:Languages\French.isl; InfoBeforeFile: temp\README_fr.txt
 Name: es; MessagesFile: compiler:Languages\Spanish.isl; InfoBeforeFile: temp\README_es.txt
-Name: it; MessagesFile: compiler:Languages\Italian.isl
+Name: it; MessagesFile: compiler:Languages\Italian.isl; InfoBeforeFile: temp\README_it.txt
 Name: pl; MessagesFile: compiler:Languages\Polish.isl
 Name: ru; MessagesFile: compiler:Languages\Russian.isl; InfoBeforeFile: temp\README_ru.txt
 ;Name: tr; MessagesFile: compiler:Languages\Turkish.isl; InfoBeforeFile: temp\README_tr.txt
