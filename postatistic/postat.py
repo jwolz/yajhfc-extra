@@ -119,7 +119,11 @@ for i in range(0, len(filelist)):
       GC_path = GC_base + filename[pos:] + '?repo=' + GC_repos[i]
       transmsg = '<a href="' + GC_path + '">' + transmsg + '</a>'
     
-    locale = babel.Locale(lang)
+    if ('_' in lang):
+      langtup = lang.split('_')
+      locale = babel.Locale(langtup[0], langtup[1])
+    else:
+      locale = babel.Locale(lang)
     print " <tr>"
     print "  <td><b>%s</b> (%s / %s)</td>" % (lang, locale.get_display_name("en"), locale.get_display_name())
     print "  <td>%s</td>" % (transmsg)
