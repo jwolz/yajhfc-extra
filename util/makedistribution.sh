@@ -129,7 +129,9 @@ fi
 if [ $1 == all -o $1 == mac ]; then 
  echo "Creating MAC app..."
  cd $EXTRADIR/mac-app
- ./make-macapp.sh $YAJVERDOT "$OUTPUT"
+ #./make-macapp.sh $YAJVERDOT "$OUTPUT"
+ $ANT -Dyajhfc.version=$YAJVERDOT clean macapp
+ cp dist/yajhfc-macapp.zip $OUTPUT/yajhfc-macapp-$YAJVERDOT.zip
 fi
 
 if [ $1 == all -o $1 == rpm ]; then 

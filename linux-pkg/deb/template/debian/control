@@ -8,8 +8,8 @@ Homepage: http://www.yajhfc.de/
 
 Package: yajhfc
 Architecture: all
-Depends: openjdk-7-jre | openjdk-6-jre | sun-java6-jre | java5-runtime
-Recommends: openjdk-7-jre | openjdk-6-jre | sun-java6-jre
+Depends: openjdk-8-jre | openjdk-7-jre | openjdk-6-jre | sun-java6-jre | java5-runtime
+Recommends: openjdk-8-jre | openjdk-7-jre
 Suggests: ghostscript, libtiff-tools, pdf-viewer, postscript-viewer
 Description: Yet Another Java HylaFAX client
  YajHFC is a client program for the HylaFAX fax server, implemented in Java.
@@ -58,7 +58,7 @@ Description: Command line only mode for YajHFC
 
 Package: yajhfc-pdfplugin
 Architecture: all
-Depends: yajhfc, libitext5-java, libjna-java, libtiff5
+Depends: yajhfc, libitext5-java, libjna-java, libtiff5 | libtiff4
 Description: PDF plugin for YajHFC
  This plugin uses iText to add advanced PDF support in YajHFC:
    * PDF cover pages

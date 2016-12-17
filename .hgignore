@@ -6,8 +6,12 @@ winsetup/redmon/*
 winsetup/redmon17.zip
 winsetup/redmon64/*
 winsetup/temp/*
+mac-app/dist/*
+mac-app/old/*
 
 syntax: glob
 *~
 linux-pkg/printerport-cups.tar.gz
 *.old
+.*DS_Store
+

@@ -2,7 +2,7 @@
 # CUPS backend for YajHFC
 
 if [ $# == 0 ]; then
-  echo 'file yajhfc:/tmp/yajhfc-$USERNAME "YajHFC Fax Printer" "HylaFAX" "MFG:HylaFAX;MDL:(HylaFAX);DES:YAJHFC HylaFAX Printer;CLS:PRINTER;CMD:POSTSCRIPT;"'
+  echo 'file yajhfc:/var/spool/yajhfc/printer-$USERNAME "YajHFC Fax Printer" "HylaFAX" "MFG:HylaFAX;MDL:(HylaFAX);DES:YAJHFC HylaFAX Printer;CLS:PRINTER;CMD:POSTSCRIPT;"'
   exit
 fi
 
@@ -18,11 +18,11 @@ if [ -n "$DEVICE_URI" ]; then
   PIPENAME=${DEVICE_URI#yajhfc:}
   PIPENAME=${PIPENAME/\$USERNAME/$USERNAME}
 else
-  PIPENAME="/tmp/yajhfc-$USERNAME"
+  PIPENAME="/var/spool/yajhfc/printer-$USERNAME"
 fi
 
 if [ "$PIPENAME" == "/" ]; then
-  PIPENAME="/tmp/yajhfc-$USERNAME"
+  PIPENAME="/var/spool/yajhfc/printer-$USERNAME"
 fi
 
 if [ ! -p "$PIPENAME" ]; then

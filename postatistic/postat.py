@@ -18,14 +18,22 @@ descriptions=['Main application messages (messages.po)',
              'FOP plugin messages',
              'Batch printer and mailer plugin messages']
 
-GC_base='http://code.google.com/p/yajhfc/source/browse'
-GC_repos=['default',
-          'default',
-          'console',
-          'plugin-pdf',
-          'fopplugin',
-          'plugin-mailer']
+#GC_base='http://code.google.com/p/yajhfc/source/browse'
+#GC_repos=['default',
+#          'default',
+#          'console',
+#          'plugin-pdf',
+#          'fopplugin',
+#          'plugin-mailer']
           
+BB_base='https://bitbucket.org/jonaswolz/'
+BB_repos=['yajhfc',
+          'yajhfc',
+          'yajhfc-console',
+          'yajhfc-plugin-pdf',
+          'yajhfc-plugin-fop',
+          'yajhfc-plugin-mailer']
+BB_presrc='/src/default'
 
 
 sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
@@ -116,7 +124,8 @@ for i in range(0, len(filelist)):
       else:
         transmsg="%d of %d messages" % (numtrans, numtotal)
       pos = filename.find('/')
-      GC_path = GC_base + filename[pos:] + '?repo=' + GC_repos[i]
+      #GC_path = GC_base + filename[pos:] + '?repo=' + GC_repos[i]
+      GC_path = BB_base + BB_repos[i] + BB_presrc + filename[pos:] 
       transmsg = '<a href="' + GC_path + '">' + transmsg + '</a>'
     
     if ('_' in lang):
