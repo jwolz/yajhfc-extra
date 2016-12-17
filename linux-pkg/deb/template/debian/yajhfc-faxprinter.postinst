@@ -21,11 +21,18 @@ set -e
 
 case "$1" in
     configure|reconfigure)
+        YAJHFCURI='yajhfc:/var/spool/yajhfc/printer-$USERNAME'
+    
         if lpstat -p yajhfc >/dev/null 2>&1 ; then
-	  echo 'YajHFC fax printer already exists.'
+          if lpstat -v yajhfc | grep "$YAJHFCURI" > /dev/null 2>&1 ; then
+  	    echo 'YajHFC fax printer already exists, not changing it.'
+          else
+            lpadmin -p yajhfc -v "$YAJHFCURI"
+            echo "Changed YajHFC fax printer device to $YAJHFCURI"
+  	  fi
 	else
 	  #/etc/init.d/cups force-reload
-       	  lpadmin -p yajhfc -D 'YajHFC virtual fax printer' -L 'localhost' -v 'yajhfc:/tmp/yajhfc-$USERNAME' -E -P /usr/share/yajhfc/yajhfc.ppd -o "printer-error-policy=abort-job" -o "printer-is-shared=false"
+       	  lpadmin -p yajhfc -D 'YajHFC virtual fax printer' -L 'localhost' -v "$YAJHFCURI" -E -P /usr/share/yajhfc/yajhfc.ppd -o "printer-error-policy=abort-job" -o "printer-is-shared=false"
 	  echo 'Virtual fax printer "yajhfc" created. (Re)Start YajHFC to fully enable it.'
 	fi
 
@@ -38,6 +45,10 @@ case "$1" in
 	  if [ -e /etc/xdg/autostart/yajhfc-autostart.desktop ]; then
 	    rm -f /etc/xdg/autostart/yajhfc-autostart.desktop
 	  fi
+	fi
+	
+	if [ ! -e /var/spool/yajhfc ] ; then
+	  mkdir -m 1777 /var/spool/yajhfc
 	fi
     ;;
 

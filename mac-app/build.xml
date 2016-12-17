@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="YajHFC" default="macapp" basedir=".">
+
+	<property file="build.properties"/>
+	
+	<property name="yajhfc-root" location="../../../workspace/yajhfc"/>
+	<property name="yajhfc-jar" location="${yajhfc-root}/build/yajhfc.jar"/>
+	
+	<property name="yajhfc-pdf-root" location="${yajhfc-root}/../yajhfc-pdf-plugin"/>
+	<property name="yajhfc-pdf-plugin-jar" location="${yajhfc-pdf-root}/build/yajhfc-pdf-plugin.jar"/>
+	<property name="itext.path" location="${yajhfc-pdf-root}/../../lib/itext"/>
+	<property file="${yajhfc-pdf-root}/build.properties"/>
+	<property name="itext.jar" value="itextpdf-5.5.2.jar"/>
+	
+	<property name="bundle.name" value="YajHFC"/>
+	<property name="yajhfc.version" value="0.6.1" />
+
+<property environment="env" />
+
+<taskdef name="bundleapp"
+         classname="com.oracle.appbundler.AppBundlerTask"
+         classpath="lib/appbundler-1.0.jar" />
+
+<target name="init">
+	<mkdir dir="dist"/>
+</target>
+
+<target name="macapp" depends="init">
+    <mkdir dir="dist/jars"/>
+    
+    <copy file="${yajhfc-jar}" todir="dist/jars"/>
+    <copy file="${yajhfc-pdf-plugin-jar}" todir="dist/jars"/>
+    <copy file="${itext.path}/${itext.jar}" todir="dist/jars"/>
+
+    <bundleapp outputdirectory="dist"
+        name="${bundle.name}"
+        displayname="YajHFC"
+        identifier="yajhfc"
+        mainclassname="yajhfc.Launcher"
+        icon="yajhfc.icns"
+        shortversion="${yajhfc.version}">
+        <classpath dir="dist/jars" includes="*.jar*"/>
+        <argument value="--loadplugin=$APP_ROOT/Contents/Java/yajhfc-pdf-plugin.jar"/>
+        
+        <option value="-Xdock:name=${bundle.name}"/>
+        <option value="-Dapple.laf.useScreenMenuBar=true"/>
+        <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
+        <option value="-Dcom.apple.mrj.application.apple.menu.about.name=${bundle.name}"/>
+    </bundleapp>
+    
+    
+    <!-- <zip destfile="dist/yajhfc-macapp.zip"
+       basedir="dist"
+       includes="YajHFC.app/**"
+    /> -->
+    <!-- we need to preserve file permissions ... -->
+    <delete file="dist/yajhfc-macapp.zip" quiet="true"/>
+    <exec executable="zip" dir="dist">
+      <arg value="-r"/>
+      <arg value="yajhfc-macapp.zip"/>
+      <arg value="${bundle.name}.app"/>
+    </exec>
+</target>
+
+<target name="clean" description="clean up" >
+	<delete dir="dist"/>
+</target>
+
+</project>
+
