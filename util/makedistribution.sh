@@ -115,7 +115,7 @@ if [ $1 == all -o $1 == win ]; then
  eval $ISCC /dVERSION=$YAJVERDOT /dFOPVersion=$FOPVERDOT setup-batchprinter.iss
 
  echo "Copying files to output..."
- cp $EXTRADIR/winsetup/Output/setup.exe $OUTPUT/yajhfc-$YAJVER-setup.exe
+ cp $EXTRADIR/winsetup/Output/yajhfc-setup.exe $OUTPUT/yajhfc-$YAJVER-setup.exe
  cp $EXTRADIR/winsetup/Output/Setup-FOPPlugin.exe $OUTPUT/yajhfc-$YAJVER-FOPPlugin-$FOPVER-setup.exe
  cp $EXTRADIR/winsetup/Output/Setup-BatchPrinter.exe $OUTPUT/yajhfc-$YAJVER-plugin-mail-setup.exe
 fi
