@@ -8,7 +8,7 @@ Homepage: http://www.yajhfc.de/
 
 Package: yajhfc
 Architecture: all
-Depends: openjdk-8-jre | openjdk-7-jre | openjdk-6-jre | sun-java6-jre | java5-runtime
+Depends: openjdk-8-jre | openjdk-7-jre | java8-runtime | java7-runtime | java6-runtime | java5-runtime
 Recommends: openjdk-8-jre | openjdk-7-jre
 Suggests: ghostscript, libtiff-tools, pdf-viewer, postscript-viewer
 Description: Yet Another Java HylaFAX client

@@ -72,9 +72,21 @@ sh install-faxprinter.sh "%{buildroot}"
        	  lpadmin -p yajhfc -D 'YajHFC virtual fax printer' -L 'localhost' -v 'yajhfc:/tmp/yajhfc-$USERNAME' -E -P /usr/share/yajhfc/yajhfc.ppd -o "printer-error-policy=abort-job" -o "printer-is-shared=false"
 	  echo 'Virtual fax printer "yajhfc" created. (Re)Start YajHFC to fully enable it.'
 	fi
+	
+	if [ ! -e /var/spool/yajhfc ] ; then
+	  mkdir -m 1777 /var/spool/yajhfc
+	fi
 
 %preun faxprinter
-	lpadmin -x yajhfc || true
+     lpadmin -x yajhfc || true
+     
+     if [ -d /var/spool/yajhfc ]; then
+       set +e
+       rm -f /var/spool/yajhfc/printer*
+       rmdir /var/spool/yajhfc
+       set -e
+     fi
+	
 %files faxprinter
 %defattr(-, root, root)
 %doc doc/COPYING

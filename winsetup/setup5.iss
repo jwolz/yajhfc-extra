@@ -126,6 +126,7 @@ AppID={{2B5B4C28-0B7E-45C8-AF23-9A1816E70911}
 UninstallDisplayIcon={app}\yajhfc.exe
 UninstallDisplayName={#APPVERNAME}
 ArchitecturesInstallIn64BitMode=x64
+OutputBaseFilename=yajhfc-setup
 
 #define public AdditionalLaunchArgs=""
 
