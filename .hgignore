@@ -15,3 +15,4 @@ linux-pkg/printerport-cups.tar.gz
 *.old
 .*DS_Store
 
+winsetup/jre/*
