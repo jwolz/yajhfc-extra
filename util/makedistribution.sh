@@ -32,7 +32,7 @@ fi
 build() {
 ANT=ant
 ISCC="wine \"C:\Program Files\Inno Setup 5\ISCC\""
-ISSFILE=setup5.iss
+ISSFILE=setup6.iss
 FOPISSFILE=setup-fop.iss
 WINDOWSIFY="java -cp $WORKSPACE/jtools/bin windowsify.Windowsify"
 

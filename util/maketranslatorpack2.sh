@@ -128,8 +128,8 @@ if [ "$UPLOADSTUFF" = "y" ]; then
 	cd $OUTDIR
 
 	echo "Uploading..."
-	UPLOADPATH=/html/yajhfc/files/temp/translations
-	lftp -c "set ssl:verify-certificate false; open ftp://web406@srv7.sysproserver.de/$UPLOADPATH ; mput yajhfc_*.zip"
+	UPLOADPATH=/web/yajhfc/files/temp/translations
+	lftp -c "set ssl:verify-certificate false; open sftp://u15792@jwolz.de:23/; cd $UPLOADPATH ; mput yajhfc_*.zip"
 	#scp yajhfc_*.zip jwolz@shell.berlios.de:/home/groups/ftp$UPLOADPATH/
 	
 	echo "Uploaded the following files:"

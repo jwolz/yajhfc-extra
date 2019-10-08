@@ -128,11 +128,13 @@ for i in range(0, len(filelist)):
       GC_path = BB_base + BB_repos[i] + BB_presrc + filename[pos:] 
       transmsg = '<a href="' + GC_path + '">' + transmsg + '</a>'
     
-    if ('_' in lang):
-      langtup = lang.split('_')
-      locale = babel.Locale(langtup[0], langtup[1])
-    else:
-      locale = babel.Locale(lang)
+    #if ('_' in lang):
+    #  langtup = lang.split('_')
+    #  locale = babel.Locale(langtup[0], langtup[1])
+    #else:
+    #  locale = babel.Locale(lang)
+    locale = babel.Locale.parse(lang)
+    
     print " <tr>"
     print "  <td><b>%s</b> (%s / %s)</td>" % (lang, locale.get_display_name("en"), locale.get_display_name())
     print "  <td>%s</td>" % (transmsg)
