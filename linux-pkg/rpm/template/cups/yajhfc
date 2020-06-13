@@ -35,11 +35,17 @@ if [ ! -w "$PIPENAME" ]; then
 	exit 1
 fi
 
-m=`cat $6 >"$PIPENAME" 2>&1`
-RC=$?
+#m=`cat $6 >"$PIPENAME" 2>&1`
+# Use dd instead of cat so that it works with fs.protected_fifos=1
+DDINFILE=''
+if [ -n "$6" ]; then
+  DDINFILE="if=$6"
+fi
+m=$(dd $DDINFILE "of=$PIPENAME" bs=16k conv=nocreat,notrunc 2>&1 | tr '\n' ';')
+RC=${PIPESTATUS[0]}
 case $RC in
 	0) echo "INFO: Fax sent" 1>&2 ;;
-	*) echo "ERROR: cat error (RC=$RC): $m" 1>&2 ;;
+	*) echo "ERROR: dd error (RC=$RC): $m" 1>&2 ;;
 esac
 
 exit $RC
