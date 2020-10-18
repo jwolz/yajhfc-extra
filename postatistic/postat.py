@@ -26,14 +26,14 @@ descriptions=['Main application messages (messages.po)',
 #          'fopplugin',
 #          'plugin-mailer']
           
-BB_base='https://bitbucket.org/jonaswolz/'
+BB_base='https://github.com/jwolz/'
 BB_repos=['yajhfc',
           'yajhfc',
           'yajhfc-console',
           'yajhfc-plugin-pdf',
           'yajhfc-plugin-fop',
           'yajhfc-plugin-mailer']
-BB_presrc='/src/default'
+BB_presrc='/blob/master'
 
 
 sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
