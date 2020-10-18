@@ -1,5 +1,5 @@
 ﻿#ifndef VERSION
- #define public VERSION "0.6.2a"
+ #define public VERSION "0.6.3"
 #endif
 
 #define APPNAME "YajHFC"
@@ -101,6 +101,7 @@ Source: temp\README_it.txt; DestDir: {app}; Components: docs
 Source: ..\cover\Coverpage example.html; DestDir: {app}\examples; Components: docs
 Source: ..\cover\SomeLogo.png; DestDir: {app}\examples; Components: docs
 
+; Temp stuff
 Source: c:\programme\istool\isxdl.dll; DestDir: {tmp}; Flags: dontcopy
 
 ; mfilemon stuff
@@ -193,7 +194,7 @@ Filename: {code:mfilemonSetupPath}; WorkingDir: {tmp}; StatusMsg: {cm:Installing
 Filename: cmd; Parameters: "/c echo Restarting spooler service, please wait... && net stop spooler && net start spooler"; StatusMsg: {cm:InstallingPrinterPort}; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; BeforeInstall: InstallYajHFCPort();
 ; Windows 2000+XP
 Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""Apple LaserWriter 16/600 PS"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,5.0; OnlyBelowVersion: 0,6.0
-; Windows Vista/7/8
+; Windows Vista/7/8/10
 Filename: rundll32; Parameters: "printui.dll,PrintUIEntry /if /b ""{cm:printername}"" /f {win}\inf\ntprint.inf /r ""yajhfc:"" /m ""MS Publisher Color Printer"""; Components: faxprinter/redmon faxprinter/redmonee faxprinter/mfilemon; StatusMsg: {cm:InstallingX,{cm:faxprinter}}; Check: NoYajHFCPrinter; MinVersion: 0,6.0; 
 
 ; Windows Vista (alt)
@@ -462,6 +463,7 @@ var bInstallGS: boolean;
     sPlatformJarPath: string;
     preserveDownload: integer;
     bRemoveOldPrinter: boolean;
+    printerExists: boolean;
 const
     ghostscript32path = 'http://download.yajhfc.de/redirect/gsw32setup-newest.exe';
     ghostscript64path = 'http://download.yajhfc.de/redirect/gsw64setup-newest.exe';
@@ -478,6 +480,7 @@ begin
   bInstallTIFF := false;
   bRemoveOldPrinter := false;
   preserveDownload := -1;
+  printerExists := RegKeyExists(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Printers\' + CustomMessage('printername'));
 
   result := true;
 end;
@@ -494,7 +497,7 @@ end;
 
 function NoYajHFCPrinter(): Boolean;
 begin
-	result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Print\Printers\' + CustomMessage('printername'));
+	result := not printerExists;
 end;
 
 // Install port for "normal" Redmon

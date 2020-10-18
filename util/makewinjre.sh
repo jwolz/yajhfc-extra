@@ -6,7 +6,8 @@
 LINUX_JDK_PATH=/data/jonas/build/jdk-11.0.2
 
 # Path to the Windows JDK to build from
-WIN_JDK_PATH=/data/jonas/build/win64-jdk-11.0.2
+#WIN_JDK_PATH=/data/jonas/build/win64-jdk-11.0.2
+WIN_JDK_PATH=/data/jonas/build/jdk-11.0.8+10
 
 # Modules to include
 MODULES=java.base,java.datatransfer,java.desktop,java.logging,java.management,java.naming,java.security.sasl,java.sql,java.xml,java.xml.crypto
